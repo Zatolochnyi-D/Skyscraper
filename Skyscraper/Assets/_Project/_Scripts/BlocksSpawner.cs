@@ -1,16 +1,20 @@
+using ThreeDent.Helpers.Extensions;
 using UnityEngine;
 
 public class BlocksSpawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private GameObject blockToSpawn;
+    [SerializeField] private float spawnInterval;
+
+    void Awake()
     {
-        
+        this.InvokeRepeatedly(Spawn, spawnInterval);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Spawn()
     {
-        
+        var newBlock = Instantiate(blockToSpawn, transform);
+        newBlock.transform.position = spawnPoint.position;
     }
 }
