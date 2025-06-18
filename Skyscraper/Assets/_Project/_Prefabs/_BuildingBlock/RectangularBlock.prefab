@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8921419403444003612, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
+      propertyPath: blockCollider
+      value: 
+      objectReference: {fileID: 8342291344937654681}
     - target: {fileID: 121388637832669900, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

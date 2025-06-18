@@ -4,6 +4,8 @@ using System.Collections;
 
 public class BlockLandingDetector : MonoBehaviour
 {
+    private static readonly BlockLandedEvent eventArgs = new();
+
     [SerializeField] private Rigidbody2D physicalBody;
     [SerializeField] private float speedEpsilon = 0.0002f;
     [SerializeField] private float timeToStandNotMoved = 4f;
@@ -34,8 +36,12 @@ public class BlockLandingDetector : MonoBehaviour
             if (timeElapsed >= timeToStandNotMoved)
                 break;
         }
-        EventBroker.Invoke<BlockLandedEvent>();
+        eventArgs.sender = gameObject;
+        EventBroker.Invoke(eventArgs);
     }
 }
 
-public class BlockLandedEvent : IEvent {}
+public class BlockLandedEvent : IEvent
+{
+    public GameObject sender;
+}
