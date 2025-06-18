@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 121388637832669900}
   - component: {fileID: 1961812567690002883}
+  - component: {fileID: -7272220728812228917}
   m_Layer: 0
   m_Name: BuildingBlock
   m_TagString: Untagged
@@ -59,3 +60,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7272220728812228917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2605037359497991013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e72ef16d202439c92059a704a26d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalBody: {fileID: 1961812567690002883}
+  movementEpsilon: 0.0002
+  waitBeforeCheck: 1
+  timeToStandNotMoved: 4

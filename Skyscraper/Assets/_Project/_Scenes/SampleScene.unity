@@ -303,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 2145617600}
   blockToSpawn: {fileID: 3411462713058625145, guid: 5727cf8250e0f4868a31c72c9e5a3193, type: 3}
-  spawnInterval: 4
+  spawnInterval: 2
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
