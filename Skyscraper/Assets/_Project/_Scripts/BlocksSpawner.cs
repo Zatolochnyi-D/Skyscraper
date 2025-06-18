@@ -10,8 +10,12 @@ public class BlocksSpawner : MonoBehaviour
 
     void Awake()
     {
-        Spawn();
         EventBroker.Subscribe<BlockLandedEvent>(SpawnAfterInterval);
+    }
+
+    void Start()
+    {
+        Spawn();
     }
 
     void OnDestroy()
@@ -22,6 +26,7 @@ public class BlocksSpawner : MonoBehaviour
     private void Spawn()
     {
         var newBlock = Instantiate(blockToSpawn, transform);
+        newBlock.GetComponent<BlockSilhouetteController>().Show();
         newBlock.transform.position = spawnPoint.position;
     }
 
