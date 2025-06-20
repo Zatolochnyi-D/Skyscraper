@@ -3,14 +3,16 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
 
 [CustomEditor(typeof(MonoBehaviour), true)]
-public class ExtendedCustomEditor : Editor
+public class ExtendedCustomMonoBehaviourEditor : Editor
 {
+    protected GameObject gameObject;
     private IEnumerable<(FieldInfo field, SerializedProperty property)> fieldPropertyPairs;
-    private GameObject gameObject;
 
-    void OnEnable()
+    protected virtual void OnEnable()
     {
         var fields = target.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         var serializableFields = fields.Where(x => x.IsPublic || x.IsDefined(typeof(SerializeField), true));
@@ -19,24 +21,36 @@ public class ExtendedCustomEditor : Editor
         gameObject = ((MonoBehaviour)target).gameObject;
     }
 
-    private void HandleOnThisAttribute(FieldInfo field, SerializedProperty property)
+    private void HandleOnThisAttribute(VisualElement hierarchy, FieldInfo field, SerializedProperty property)
     {
         if (typeof(Component).IsAssignableFrom(field.FieldType))
         {
             // Check that field object is derived from Component, that's the only type that can be attached to GameObject.
-            property.objectReferenceValue = gameObject.GetComponent(field.FieldType);
+            if (gameObject.TryGetComponent(field.FieldType, out var component))
+            {
+                property.objectReferenceValue = component;
+            }
+            else
+            {
+                var warningText = $@"This script requires component ""{field.FieldType.Name}"" to be present on this object.";
+                hierarchy.Insert(0, new HelpBox(warningText, HelpBoxMessageType.Warning));
+            }
         }
     }
 
-    public override void OnInspectorGUI()
+    public override VisualElement CreateInspectorGUI()
     {
+        var hierarchy = new VisualElement();
+
         foreach (var (field, property) in fieldPropertyPairs)
         {
             if (field.IsDefined(typeof(OnThisAttribute)))
-                HandleOnThisAttribute(field, property);
+                HandleOnThisAttribute(hierarchy, field, property);
             else
-                EditorGUILayout.PropertyField(property);
+                hierarchy.Add(new PropertyField(property));
         }
+
         serializedObject.ApplyModifiedProperties();
+        return hierarchy;
     }
 }
