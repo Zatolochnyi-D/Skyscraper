@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
 [CustomEditor(typeof(MonoBehaviour), true)]
-public class ExtendedCustomMonoBehaviourEditor : Editor
+public class CustomMonoBehaviourEditor : Editor
 {
     protected GameObject gameObject;
     private IEnumerable<(FieldInfo field, SerializedProperty property)> fieldPropertyPairs;
@@ -32,6 +32,7 @@ public class ExtendedCustomMonoBehaviourEditor : Editor
             }
             else
             {
+                property.objectReferenceValue = null;
                 var warningText = $@"This script requires component ""{field.FieldType.Name}"" to be present on this object.";
                 hierarchy.Insert(0, new HelpBox(warningText, HelpBoxMessageType.Warning));
             }
@@ -40,17 +41,24 @@ public class ExtendedCustomMonoBehaviourEditor : Editor
 
     public override VisualElement CreateInspectorGUI()
     {
-        var hierarchy = new VisualElement();
-
-        foreach (var (field, property) in fieldPropertyPairs)
+        if (EditorStyleController.UseCustomMonoBehaviourEditor)
         {
-            if (field.IsDefined(typeof(OnThisAttribute)))
-                HandleOnThisAttribute(hierarchy, field, property);
-            else
-                hierarchy.Add(new PropertyField(property));
-        }
+            var hierarchy = new VisualElement();
 
-        serializedObject.ApplyModifiedProperties();
-        return hierarchy;
+            foreach (var (field, property) in fieldPropertyPairs)
+            {
+                if (field.IsDefined(typeof(OnThisAttribute)))
+                    HandleOnThisAttribute(hierarchy, field, property);
+                else
+                    hierarchy.Add(new PropertyField(property));
+            }
+
+            serializedObject.ApplyModifiedProperties();
+            return hierarchy;
+        }
+        else
+        {
+            return base.CreateInspectorGUI();
+        }
     }
 }
