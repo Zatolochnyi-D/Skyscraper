@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BlockSilhouetteController : MonoBehaviour
 {
+    [OnThis, SerializeField] private Collider2D blockCollider;
     [SerializeField] private int silhoetteIndex;
-    [SerializeField] private Collider2D blockCollider;
 
     private GameObject silhoette;
 

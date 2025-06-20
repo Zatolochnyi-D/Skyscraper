@@ -6,7 +6,7 @@ public class BlockLandingDetector : MonoBehaviour
 {
     private static readonly BlockLandedEvent eventArgs = new();
 
-    [SerializeField] private Rigidbody2D physicalBody;
+    [OnThis, SerializeField] private Rigidbody2D physicalBody;
     [SerializeField] private float speedEpsilon = 0.0002f;
     [SerializeField] private float timeToStandNotMoved = 4f;
 
