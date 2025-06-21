@@ -1,16 +1,31 @@
+using ThreeDent.Helpers.Tools;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+namespace Skyscraper.Inputs
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public enum InputModes
     {
-        
+        Game,
     }
 
-    // Update is called once per frame
-    void Update()
+    public class InputManager : Singleton<InputManager>
     {
-        
+        private readonly Inputs inputs = new();
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
+        public static void SwitchMode(InputModes mode)
+        {
+            switch (mode)
+            {
+                case InputModes.Game:
+                    Instance.inputs.Disable();
+                    Instance.inputs.Game.Enable();
+                    break;
+            }
+        }
     }
 }
