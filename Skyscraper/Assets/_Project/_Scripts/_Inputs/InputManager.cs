@@ -10,11 +10,12 @@ namespace Skyscraper.Inputs
 
     public class InputManager : Singleton<InputManager>
     {
-        private readonly Inputs inputs = new();
+        private Inputs inputs;
 
         protected override void Awake()
         {
             base.Awake();
+            inputs = new();
         }
 
         public static void SwitchMode(InputModes mode)
