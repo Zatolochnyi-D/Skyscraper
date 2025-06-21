@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class SilhoettePool : Singleton<SilhoettePool>
 {
-    [SerializeField] private GameObject[] blockVisuals;
+    [SerializeField] private GameObject[] blockVisualPrefabs;
 
-    private GameObjectPool[] blockVisualPools;
+    private GameObject[] blockVisuals;
 
     protected override void Awake()
     {
         base.Awake();
-        blockVisualPools = new GameObjectPool[blockVisuals.Length];
-        for (int i = 0; i < blockVisuals.Length; i++)
-            blockVisualPools[i] = new(blockVisuals[i], parent: transform);
+        blockVisuals = new GameObject[blockVisualPrefabs.Length];
+        for (int i = 0; i < blockVisualPrefabs.Length; i++)
+        {
+            blockVisuals[i] = Instantiate(blockVisualPrefabs[i], transform);
+            blockVisuals[i].SetActive(false);
+        }
     }
 
     public static GameObject GetSilhoette(int index)
     {
-        return Instance.blockVisualPools[index].GetPooledObject();
+        return Instance.blockVisuals[index];
     }
 }

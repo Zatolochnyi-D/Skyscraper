@@ -17,8 +17,7 @@ public class BlockLandingDetector : MonoBehaviour
     {
         if (!firstCollisionHappened)
         {
-            // Object hit other object for the first time.
-            // Should initiate object movement check to ensure it actually landed and not just hit other object.
+            // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
             firstCollisionHappened = true;
             StartCoroutine(MovementCheckCycle());
         }

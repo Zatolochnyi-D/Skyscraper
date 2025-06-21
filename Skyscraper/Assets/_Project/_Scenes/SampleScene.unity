@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c7ee23b1a0b4730bf43066ec1247b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockVisuals:
+  blockVisualPrefabs:
   - {fileID: 3145993169217363848, guid: 0ed8972523d894527bef1939d536bd67, type: 3}
 --- !u!4 &1062991549
 Transform:

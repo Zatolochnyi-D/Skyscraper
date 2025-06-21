@@ -1,5 +1,4 @@
 using System.Collections;
-using ThreeDent.EventBroker;
 using ThreeDent.Helpers.Extensions;
 using UnityEngine;
 
@@ -13,7 +12,6 @@ public class BlockSilhouetteController : MonoBehaviour
 
     void Awake()
     {
-        EventBroker.Subscribe<BlockLandedEvent>(Hide);
         landingDetector.OnBlockLanded += Hide;
     }
 
@@ -31,16 +29,17 @@ public class BlockSilhouetteController : MonoBehaviour
         }
     }
 
-    private void Hide()
-    {
-        StopAllCoroutines();
-        silhoette.SetActive(false);
-    }
-
     public void Show()
     {
         silhoette = SilhoettePool.GetSilhoette(silhoetteIndex);
         silhoette.SetActive(true);
         StartCoroutine(SilhoetteUpdateCycle());
+    }
+
+    private void Hide()
+    {
+        StopAllCoroutines();
+        silhoette.SetActive(false);
+        silhoette = null;
     }
 }
