@@ -30,7 +30,7 @@ public class BlocksSpawner : MonoBehaviour
         newBlock.transform.position = spawnPoint.position;
     }
 
-    private void SpawnAfterInterval(BlockLandedEvent args)
+    private void SpawnAfterInterval()
     {
         this.InvokeOnce(Spawn, additionalSpawnInterval);
     }

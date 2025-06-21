@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: blockCollider
       value: 
       objectReference: {fileID: 8342291344937654681}
+    - target: {fileID: -8921419403444003612, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
+      propertyPath: landingDetector
+      value: 
+      objectReference: {fileID: 1180753616484203479}
     - target: {fileID: 121388637832669900, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -76,6 +80,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 121388637832669900, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
   m_PrefabInstance: {fileID: 824441230852511004}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1180753616484203479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -7272220728812228917, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
+  m_PrefabInstance: {fileID: 824441230852511004}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3411462713058625145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e72ef16d202439c92059a704a26d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3411462713058625145 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2605037359497991013, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}

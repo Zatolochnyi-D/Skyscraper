@@ -6,6 +6,7 @@ using UnityEngine;
 public class BlockSilhouetteController : MonoBehaviour
 {
     [OnThis, SerializeField] private Collider2D blockCollider;
+    [OnThis, SerializeField] private BlockLandingDetector landingDetector;
     [SerializeField] private int silhoetteIndex;
 
     private GameObject silhoette;
@@ -13,6 +14,7 @@ public class BlockSilhouetteController : MonoBehaviour
     void Awake()
     {
         EventBroker.Subscribe<BlockLandedEvent>(Hide);
+        landingDetector.OnBlockLanded += Hide;
     }
 
     private IEnumerator SilhoetteUpdateCycle()
@@ -29,13 +31,10 @@ public class BlockSilhouetteController : MonoBehaviour
         }
     }
 
-    private void Hide(BlockLandedEvent args)
+    private void Hide()
     {
-        if (args.sender == gameObject)
-        {
-            StopAllCoroutines();
-            silhoette.SetActive(false);
-        }
+        StopAllCoroutines();
+        silhoette.SetActive(false);
     }
 
     public void Show()

@@ -88,4 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d56e3c5669994a2ea254da25eaea075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockCollider: {fileID: 0}
+  landingDetector: {fileID: -7272220728812228917}
   silhoetteIndex: 0

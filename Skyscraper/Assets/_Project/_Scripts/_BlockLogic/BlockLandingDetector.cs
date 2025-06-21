@@ -5,8 +5,6 @@ using System;
 
 public class BlockLandingDetector : MonoBehaviour
 {
-    private static readonly BlockLandedEvent eventArgs = new();
-
     public event Action OnBlockLanded;
 
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
@@ -39,13 +37,9 @@ public class BlockLandingDetector : MonoBehaviour
             if (timeElapsed >= timeToStandNotMoved)
                 break;
         }
-        eventArgs.sender = gameObject;
         OnBlockLanded?.Invoke();
-        EventBroker.Invoke(eventArgs);
+        EventBroker.Invoke<BlockLandedEvent>();
     }
 }
 
-public class BlockLandedEvent : IEvent
-{
-    public GameObject sender;
-}
+public class BlockLandedEvent : IEvent {}
