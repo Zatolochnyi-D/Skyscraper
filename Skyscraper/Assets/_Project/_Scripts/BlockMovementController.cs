@@ -18,16 +18,23 @@ public class BlockMovementController : Singleton<BlockMovementController>
 
     private void MoveCurrentBlock(float controlValue)
     {
-        mover.MoveContinious(controlValue * Time.deltaTime * new Vector2(movementPerSecond, 0f));
+        if (mover != null)
+            mover.MoveContinious(controlValue * Time.deltaTime * new Vector2(movementPerSecond, 0f));
     }
 
     private void RotateCurrentBlock(float controlValue)
     {
-        mover.RotateContinious(controlValue * Time.deltaTime * rotationPerSecond);
+        if (mover != null)
+            mover.RotateContinious(controlValue * Time.deltaTime * rotationPerSecond);
     }
 
     public static void SetCurrentBlock(BlockMover newMover)
     {
         Instance.mover = newMover;
+    }
+
+    public static void RemoveCurrentBlock()
+    {
+        Instance.mover = null;
     }
 }

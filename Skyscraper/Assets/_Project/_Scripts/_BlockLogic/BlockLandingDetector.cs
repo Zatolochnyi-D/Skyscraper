@@ -19,6 +19,7 @@ public class BlockLandingDetector : MonoBehaviour
         {
             // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
             firstCollisionHappened = true;
+            BlockMovementController.RemoveCurrentBlock();
             StartCoroutine(MovementCheckCycle());
         }
     }
