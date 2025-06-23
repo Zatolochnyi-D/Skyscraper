@@ -1,3 +1,4 @@
+using System;
 using ThreeDent.Helpers.Tools;
 using UnityEngine;
 
@@ -12,10 +13,19 @@ namespace Skyscraper.Inputs
     {
         private Inputs inputs;
 
+        public static event Action<float> OnSideMovement;
+
         protected override void Awake()
         {
             base.Awake();
             inputs = new();
+        }
+
+        private void Update()
+        {
+            var sideMovementValue = inputs.Game.SideMovement.ReadValue<float>();
+            if (sideMovementValue != 0f)
+                OnSideMovement?.Invoke(sideMovementValue);
         }
 
         public static void SwitchMode(InputModes mode)
