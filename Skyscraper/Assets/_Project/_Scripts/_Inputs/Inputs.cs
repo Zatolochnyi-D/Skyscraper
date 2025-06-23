@@ -94,9 +94,18 @@ namespace Skyscraper.Inputs
             ""id"": ""619a27f0-b600-48e0-a85e-c7de95ef7515"",
             ""actions"": [
                 {
-                    ""name"": ""SideMovement"",
+                    ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""60c34f8c-4d37-4edb-a13c-906673aac721"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""33ed0221-665b-4ede-8394-229c960100c6"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -120,7 +129,7 @@ namespace Skyscraper.Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SideMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -131,7 +140,7 @@ namespace Skyscraper.Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SideMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -142,7 +151,7 @@ namespace Skyscraper.Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SideMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -156,6 +165,39 @@ namespace Skyscraper.Inputs
                     ""action"": ""SpeedupFall"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""4fcf23c5-498f-4b90-8af0-c3129924e8f1"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""5df97d34-7a02-4072-ae53-82074ef6e11f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4474fbf4-9fc4-4c9a-8f68-c9ea2de5b6be"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -164,7 +206,8 @@ namespace Skyscraper.Inputs
 }");
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
-            m_Game_SideMovement = m_Game.FindAction("SideMovement", throwIfNotFound: true);
+            m_Game_Movement = m_Game.FindAction("Movement", throwIfNotFound: true);
+            m_Game_Rotation = m_Game.FindAction("Rotation", throwIfNotFound: true);
             m_Game_SpeedupFall = m_Game.FindAction("SpeedupFall", throwIfNotFound: true);
         }
 
@@ -246,7 +289,8 @@ namespace Skyscraper.Inputs
         // Game
         private readonly InputActionMap m_Game;
         private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
-        private readonly InputAction m_Game_SideMovement;
+        private readonly InputAction m_Game_Movement;
+        private readonly InputAction m_Game_Rotation;
         private readonly InputAction m_Game_SpeedupFall;
         /// <summary>
         /// Provides access to input actions defined in input action map "Game".
@@ -260,9 +304,13 @@ namespace Skyscraper.Inputs
             /// </summary>
             public GameActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             /// <summary>
-            /// Provides access to the underlying input action "Game/SideMovement".
+            /// Provides access to the underlying input action "Game/Movement".
             /// </summary>
-            public InputAction @SideMovement => m_Wrapper.m_Game_SideMovement;
+            public InputAction @Movement => m_Wrapper.m_Game_Movement;
+            /// <summary>
+            /// Provides access to the underlying input action "Game/Rotation".
+            /// </summary>
+            public InputAction @Rotation => m_Wrapper.m_Game_Rotation;
             /// <summary>
             /// Provides access to the underlying input action "Game/SpeedupFall".
             /// </summary>
@@ -293,9 +341,12 @@ namespace Skyscraper.Inputs
             {
                 if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
-                @SideMovement.started += instance.OnSideMovement;
-                @SideMovement.performed += instance.OnSideMovement;
-                @SideMovement.canceled += instance.OnSideMovement;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+                @Rotation.started += instance.OnRotation;
+                @Rotation.performed += instance.OnRotation;
+                @Rotation.canceled += instance.OnRotation;
                 @SpeedupFall.started += instance.OnSpeedupFall;
                 @SpeedupFall.performed += instance.OnSpeedupFall;
                 @SpeedupFall.canceled += instance.OnSpeedupFall;
@@ -310,9 +361,12 @@ namespace Skyscraper.Inputs
             /// <seealso cref="GameActions" />
             private void UnregisterCallbacks(IGameActions instance)
             {
-                @SideMovement.started -= instance.OnSideMovement;
-                @SideMovement.performed -= instance.OnSideMovement;
-                @SideMovement.canceled -= instance.OnSideMovement;
+                @Movement.started -= instance.OnMovement;
+                @Movement.performed -= instance.OnMovement;
+                @Movement.canceled -= instance.OnMovement;
+                @Rotation.started -= instance.OnRotation;
+                @Rotation.performed -= instance.OnRotation;
+                @Rotation.canceled -= instance.OnRotation;
                 @SpeedupFall.started -= instance.OnSpeedupFall;
                 @SpeedupFall.performed -= instance.OnSpeedupFall;
                 @SpeedupFall.canceled -= instance.OnSpeedupFall;
@@ -357,12 +411,19 @@ namespace Skyscraper.Inputs
         public interface IGameActions
         {
             /// <summary>
-            /// Method invoked when associated input action "SideMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Movement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnSideMovement(InputAction.CallbackContext context);
+            void OnMovement(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Rotation" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnRotation(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "SpeedupFall" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

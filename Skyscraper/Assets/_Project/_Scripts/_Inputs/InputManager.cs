@@ -13,7 +13,9 @@ namespace Skyscraper.Inputs
     {
         private Inputs inputs;
 
-        public static event Action<float> OnSideMovement;
+        public static event Action<float> OnMovement;
+        public static event Action<float> OnRotation;
+        public static event Action OnSpeedup;
 
         protected override void Awake()
         {
@@ -23,9 +25,17 @@ namespace Skyscraper.Inputs
 
         private void Update()
         {
-            var sideMovementValue = inputs.Game.SideMovement.ReadValue<float>();
-            if (sideMovementValue != 0f)
-                OnSideMovement?.Invoke(sideMovementValue);
+            var movementValue = inputs.Game.Movement.ReadValue<float>();
+            if (movementValue != 0f)
+                OnMovement?.Invoke(movementValue);
+
+            var rotationValue = inputs.Game.Rotation.ReadValue<float>();
+            if (rotationValue != 0f)
+                OnRotation?.Invoke(rotationValue);
+
+            var speedupValue = inputs.Game.SpeedupFall.ReadValue<float>();
+            if (speedupValue != 0f)
+                OnSpeedup?.Invoke();
         }
 
         public static void SwitchMode(InputModes mode)
