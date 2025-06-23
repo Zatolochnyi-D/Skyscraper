@@ -28,6 +28,7 @@ public class BlocksSpawner : MonoBehaviour
         var newBlock = Instantiate(blockToSpawn, transform);
         newBlock.GetComponent<BlockSilhouetteController>().Show();
         newBlock.transform.position = spawnPoint.position;
+        BlockMovementController.SetCurrentBlock(newBlock.GetComponent<BlockMover>());
     }
 
     private void SpawnAfterInterval()
