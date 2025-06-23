@@ -510,6 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPerSecond: 180
   movementPerSecond: 4
+  additionalFallPerSecond: 10
 --- !u!4 &1098812423
 Transform:
   m_ObjectHideFlags: 0

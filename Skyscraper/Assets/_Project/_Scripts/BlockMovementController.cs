@@ -6,6 +6,7 @@ public class BlockMovementController : Singleton<BlockMovementController>
 {
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float movementPerSecond = 4f;
+    [SerializeField] private float additionalFallPerSecond = 10f;
 
     private BlockMover mover;
 
@@ -14,18 +15,25 @@ public class BlockMovementController : Singleton<BlockMovementController>
         base.Awake();
         InputManager.OnMovement += MoveCurrentBlock;
         InputManager.OnRotation += RotateCurrentBlock;
+        InputManager.OnSpeedup += SpeedUpBlockFall;
     }
 
     private void MoveCurrentBlock(float controlValue)
     {
         if (mover != null)
-            mover.MoveContinious(controlValue * Time.deltaTime * new Vector2(movementPerSecond, 0f));
+            mover.MoveContinuous(controlValue * Time.deltaTime * new Vector2(movementPerSecond, 0f));
     }
 
     private void RotateCurrentBlock(float controlValue)
     {
         if (mover != null)
-            mover.RotateContinious(controlValue * Time.deltaTime * rotationPerSecond);
+            mover.RotateContinuous(controlValue * Time.deltaTime * rotationPerSecond);
+    }
+
+    private void SpeedUpBlockFall()
+    {
+        if (mover != null)
+            mover.MoveContinuous(Time.deltaTime * new Vector2(0f, -additionalFallPerSecond));
     }
 
     public static void SetCurrentBlock(BlockMover newMover)
