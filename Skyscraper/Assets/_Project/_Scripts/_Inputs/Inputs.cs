@@ -213,7 +213,7 @@ namespace Skyscraper.Inputs
                     ""id"": ""d0de2834-b130-423d-93db-73954f00ffc0"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""CameraMovement"",
                     ""isComposite"": true,

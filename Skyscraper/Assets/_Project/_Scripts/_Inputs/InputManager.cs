@@ -13,6 +13,7 @@ namespace Skyscraper.Inputs
     {
         private Inputs inputs;
 
+        public static event Action<Vector2> OnCameraMovement;
         public static event Action<float> OnMovement;
         public static event Action<float> OnRotation;
         public static event Action OnSpeedup;
@@ -25,6 +26,10 @@ namespace Skyscraper.Inputs
 
         private void Update()
         {
+            var cameraMovementValue = inputs.Game.CameraMovement.ReadValue<Vector2>();
+            if (cameraMovementValue != Vector2.zero)
+                OnCameraMovement?.Invoke(cameraMovementValue);
+
             var movementValue = inputs.Game.Movement.ReadValue<float>();
             if (movementValue != 0f)
                 OnMovement?.Invoke(movementValue);
