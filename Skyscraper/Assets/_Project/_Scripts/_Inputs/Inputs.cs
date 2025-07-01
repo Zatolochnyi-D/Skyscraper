@@ -119,6 +119,15 @@ namespace Skyscraper.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""48b547c9-3024-4040-9971-05c1cffe538f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -198,6 +207,61 @@ namespace Skyscraper.Inputs
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""d0de2834-b130-423d-93db-73954f00ffc0"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1110c89f-380c-4339-b875-40f83a71cd7c"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""7432caea-692f-4f9d-9c09-c75de1cb6cd6"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""abf8c8b8-eca5-416e-8184-aae664613853"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""becf2a03-ff4b-4530-b648-4de74ca1d444"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -209,6 +273,7 @@ namespace Skyscraper.Inputs
             m_Game_Movement = m_Game.FindAction("Movement", throwIfNotFound: true);
             m_Game_Rotation = m_Game.FindAction("Rotation", throwIfNotFound: true);
             m_Game_SpeedupFall = m_Game.FindAction("SpeedupFall", throwIfNotFound: true);
+            m_Game_CameraMovement = m_Game.FindAction("CameraMovement", throwIfNotFound: true);
         }
 
         ~@Inputs()
@@ -292,6 +357,7 @@ namespace Skyscraper.Inputs
         private readonly InputAction m_Game_Movement;
         private readonly InputAction m_Game_Rotation;
         private readonly InputAction m_Game_SpeedupFall;
+        private readonly InputAction m_Game_CameraMovement;
         /// <summary>
         /// Provides access to input actions defined in input action map "Game".
         /// </summary>
@@ -315,6 +381,10 @@ namespace Skyscraper.Inputs
             /// Provides access to the underlying input action "Game/SpeedupFall".
             /// </summary>
             public InputAction @SpeedupFall => m_Wrapper.m_Game_SpeedupFall;
+            /// <summary>
+            /// Provides access to the underlying input action "Game/CameraMovement".
+            /// </summary>
+            public InputAction @CameraMovement => m_Wrapper.m_Game_CameraMovement;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -350,6 +420,9 @@ namespace Skyscraper.Inputs
                 @SpeedupFall.started += instance.OnSpeedupFall;
                 @SpeedupFall.performed += instance.OnSpeedupFall;
                 @SpeedupFall.canceled += instance.OnSpeedupFall;
+                @CameraMovement.started += instance.OnCameraMovement;
+                @CameraMovement.performed += instance.OnCameraMovement;
+                @CameraMovement.canceled += instance.OnCameraMovement;
             }
 
             /// <summary>
@@ -370,6 +443,9 @@ namespace Skyscraper.Inputs
                 @SpeedupFall.started -= instance.OnSpeedupFall;
                 @SpeedupFall.performed -= instance.OnSpeedupFall;
                 @SpeedupFall.canceled -= instance.OnSpeedupFall;
+                @CameraMovement.started -= instance.OnCameraMovement;
+                @CameraMovement.performed -= instance.OnCameraMovement;
+                @CameraMovement.canceled -= instance.OnCameraMovement;
             }
 
             /// <summary>
@@ -431,6 +507,13 @@ namespace Skyscraper.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSpeedupFall(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "CameraMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnCameraMovement(InputAction.CallbackContext context);
         }
     }
 }
