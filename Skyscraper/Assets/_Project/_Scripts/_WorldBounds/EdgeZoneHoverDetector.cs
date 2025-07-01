@@ -1,5 +1,4 @@
 using System;
-using ThreeDent.Helpers.Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,15 +6,17 @@ public class EdgeZoneHoverDetector : MonoBehaviour, IPointerEnterHandler, IPoint
 {
     public event Action OnPointerHover;
 
-    private Coroutine eventRaiseCoroutine;
+    private bool isHovered = false;
+
+    public bool IsHovered => isHovered;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        eventRaiseCoroutine = this.InvokeRepeatedly(OnPointerHover.Invoke, 0);
+        isHovered = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopCoroutine(eventRaiseCoroutine);
+        isHovered = false;
     }
 }
