@@ -973,7 +973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoundingShape2D: {fileID: 1732559057}
   Damping: 0.5
-  SlowingDistance: 5
+  SlowingDistance: 0
   OversizeWindow:
     Enabled: 0
     MaxWindowSize: 0
