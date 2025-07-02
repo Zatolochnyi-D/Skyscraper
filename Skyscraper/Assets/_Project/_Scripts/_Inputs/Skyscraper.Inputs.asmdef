@@ -3,7 +3,8 @@
     "rootNamespace": "Skyscraper.Inputs",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:609a262ee3d17412495adddc68a7fef7"
+        "GUID:609a262ee3d17412495adddc68a7fef7",
+        "GUID:f9bcf692edd084d22bb2f2ba4aae20c0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -8,9 +8,13 @@ public class MouseOnEdgeDetector : MonoBehaviour
     [SerializeField] private EdgeZoneHoverDetector leftDetector;
     [SerializeField] private EdgeZoneHoverDetector rightDetector;
 
+    private Vector2 directionVector;
+
+    public Vector2 DirectionVector => directionVector;
+
     void Update()
     {
-        var directionVector = Vector2.zero;
+        directionVector = Vector2.zero;
         if (upDetector.IsHovered)
             directionVector = directionVector.With(y: 1);
         if (downDetector.IsHovered)
