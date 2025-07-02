@@ -26,6 +26,7 @@ namespace Skyscraper.Inputs
         public static event Action<Vector2> OnCameraMovement;
         public static event Action<float> OnMovement;
         public static event Action<float> OnRotation;
+        public static event Action<float> OnScroll;
         public static event Action OnSpeedup;
 
         [SerializeField] private MouseOnEdgeDetector onEdgeDetector;
@@ -52,6 +53,10 @@ namespace Skyscraper.Inputs
             var rotationValue = inputActions.Game.Rotation.ReadValue<float>();
             if (rotationValue != 0f)
                 OnRotation?.Invoke(rotationValue);
+
+            var scrollValue = inputActions.Game.Scroll.ReadValue<float>();
+            if (scrollValue != 0)
+                OnScroll?.Invoke(scrollValue);
 
             var speedupValue = inputActions.Game.SpeedupFall.ReadValue<float>();
             if (speedupValue != 0f)

@@ -128,6 +128,15 @@ namespace Skyscraper.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""3dc7c970-9d5f-4aef-81e3-85a7635333ae"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -262,6 +271,39 @@ namespace Skyscraper.Inputs
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""24355d9b-7667-48a3-b4e2-0a361fb0756e"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""5a891c2b-ee85-4247-9b67-a7fc9773c783"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""9fc39698-4dae-4c00-b7f7-0f3987559936"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -274,6 +316,7 @@ namespace Skyscraper.Inputs
             m_Game_Rotation = m_Game.FindAction("Rotation", throwIfNotFound: true);
             m_Game_SpeedupFall = m_Game.FindAction("SpeedupFall", throwIfNotFound: true);
             m_Game_CameraMovement = m_Game.FindAction("CameraMovement", throwIfNotFound: true);
+            m_Game_Scroll = m_Game.FindAction("Scroll", throwIfNotFound: true);
         }
 
         ~@Inputs()
@@ -358,6 +401,7 @@ namespace Skyscraper.Inputs
         private readonly InputAction m_Game_Rotation;
         private readonly InputAction m_Game_SpeedupFall;
         private readonly InputAction m_Game_CameraMovement;
+        private readonly InputAction m_Game_Scroll;
         /// <summary>
         /// Provides access to input actions defined in input action map "Game".
         /// </summary>
@@ -385,6 +429,10 @@ namespace Skyscraper.Inputs
             /// Provides access to the underlying input action "Game/CameraMovement".
             /// </summary>
             public InputAction @CameraMovement => m_Wrapper.m_Game_CameraMovement;
+            /// <summary>
+            /// Provides access to the underlying input action "Game/Scroll".
+            /// </summary>
+            public InputAction @Scroll => m_Wrapper.m_Game_Scroll;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -423,6 +471,9 @@ namespace Skyscraper.Inputs
                 @CameraMovement.started += instance.OnCameraMovement;
                 @CameraMovement.performed += instance.OnCameraMovement;
                 @CameraMovement.canceled += instance.OnCameraMovement;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
 
             /// <summary>
@@ -446,6 +497,9 @@ namespace Skyscraper.Inputs
                 @CameraMovement.started -= instance.OnCameraMovement;
                 @CameraMovement.performed -= instance.OnCameraMovement;
                 @CameraMovement.canceled -= instance.OnCameraMovement;
+                @Scroll.started -= instance.OnScroll;
+                @Scroll.performed -= instance.OnScroll;
+                @Scroll.canceled -= instance.OnScroll;
             }
 
             /// <summary>
@@ -514,6 +568,13 @@ namespace Skyscraper.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnCameraMovement(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Scroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScroll(InputAction.CallbackContext context);
         }
     }
 }
