@@ -9,36 +9,55 @@ namespace Skyscraper.Inputs
         Game,
     }
 
+    // public abstract class Inp<TInputAction> : Singleton<Inp<TInputAction>> where TInputAction : IInputActionCollection2, IDisposable, new()
+    // {
+    //     protected TInputAction inputActions;
+
+    //     protected override void Awake()
+    //     {
+    //         base.Awake();
+    //         inputActions = new();
+    //     }
+    // }
+
+    // public class Concr : Inp<Inputs>
+    // {
+        
+    // }
+
     public class InputManager : Singleton<InputManager>
     {
-        private Inputs inputs;
-
         public static event Action<Vector2> OnCameraMovement;
         public static event Action<float> OnMovement;
         public static event Action<float> OnRotation;
         public static event Action OnSpeedup;
 
+        [SerializeField] private MouseOnEdgeDetector onEdgeDetector;
+
+        private Inputs inputActions;
+
         protected override void Awake()
         {
             base.Awake();
-            inputs = new();
+            inputActions = new();
         }
 
         private void Update()
         {
-            var cameraMovementValue = inputs.Game.CameraMovement.ReadValue<Vector2>();
+            var cameraMovementValue = inputActions.Game.CameraMovement.ReadValue<Vector2>();
+            cameraMovementValue = cameraMovementValue != Vector2.zero ? cameraMovementValue : onEdgeDetector.DirectionVector;
             if (cameraMovementValue != Vector2.zero)
                 OnCameraMovement?.Invoke(cameraMovementValue);
 
-            var movementValue = inputs.Game.Movement.ReadValue<float>();
+            var movementValue = inputActions.Game.Movement.ReadValue<float>();
             if (movementValue != 0f)
                 OnMovement?.Invoke(movementValue);
 
-            var rotationValue = inputs.Game.Rotation.ReadValue<float>();
+            var rotationValue = inputActions.Game.Rotation.ReadValue<float>();
             if (rotationValue != 0f)
                 OnRotation?.Invoke(rotationValue);
 
-            var speedupValue = inputs.Game.SpeedupFall.ReadValue<float>();
+            var speedupValue = inputActions.Game.SpeedupFall.ReadValue<float>();
             if (speedupValue != 0f)
                 OnSpeedup?.Invoke();
         }
@@ -48,8 +67,8 @@ namespace Skyscraper.Inputs
             switch (mode)
             {
                 case InputModes.Game:
-                    Instance.inputs.Disable();
-                    Instance.inputs.Game.Enable();
+                    Instance.inputActions.Disable();
+                    Instance.inputActions.Game.Enable();
                     break;
             }
         }

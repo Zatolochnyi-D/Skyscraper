@@ -1,11 +1,8 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class EdgeZoneHoverDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public event Action OnPointerHover;
-
     private bool isHovered = false;
 
     public bool IsHovered => isHovered;
