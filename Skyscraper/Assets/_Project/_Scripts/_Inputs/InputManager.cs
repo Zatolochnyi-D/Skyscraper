@@ -1,6 +1,7 @@
 using System;
 using ThreeDent.Helpers.Tools;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Skyscraper.Inputs
 {
@@ -9,21 +10,16 @@ namespace Skyscraper.Inputs
         Game,
     }
 
-    // public abstract class Inp<TInputAction> : Singleton<Inp<TInputAction>> where TInputAction : IInputActionCollection2, IDisposable, new()
-    // {
-    //     protected TInputAction inputActions;
+    public abstract class InputManager<TInputActions> : Singleton<InputManager<TInputActions>> where TInputActions : IInputActionCollection2, IDisposable, new()
+    {
+        protected TInputActions inputActions;
 
-    //     protected override void Awake()
-    //     {
-    //         base.Awake();
-    //         inputActions = new();
-    //     }
-    // }
-
-    // public class Concr : Inp<Inputs>
-    // {
-        
-    // }
+        protected override void Awake()
+        {
+            base.Awake();
+            inputActions = new();
+        }
+    }
 
     public class InputManager : Singleton<InputManager>
     {
