@@ -1,11 +1,12 @@
 using ThreeDent.EventBroker;
 using ThreeDent.Helpers.Extensions;
+using ThreeDent.Helpers.Tools;
 using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Skyscraper.WorldBounds
 {
-    public class WorldBoundsController : MonoBehaviour
+    public class WorldBoundsController : Singleton<WorldBoundsController>
     {
         private const float RaycasterGap = 3f;
 
@@ -19,8 +20,11 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private float additionalDistanceFromSide;
         [SerializeField] private Transform floor;
 
-        private void Awake()
+        public static float UpperBoundY => Instance.bounds.size.y - Instance.lowerBound.position.y;
+
+        protected override void Awake()
         {
+            base.Awake();
             EventBroker.Subscribe<BlockLandedEvent>(RecalculateBounds);
         }
 
