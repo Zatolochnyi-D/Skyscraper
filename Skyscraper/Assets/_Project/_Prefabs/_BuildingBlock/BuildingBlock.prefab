@@ -77,6 +77,9 @@ MonoBehaviour:
   physicalBody: {fileID: 1961812567690002883}
   speedEpsilon: 0.0002
   timeToStandNotMoved: 4
+  ignoreCollisionLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &-8921419403444003612
 MonoBehaviour:
   m_ObjectHideFlags: 0

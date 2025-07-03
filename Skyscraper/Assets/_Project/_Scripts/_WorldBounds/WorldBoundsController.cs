@@ -9,6 +9,7 @@ namespace Skyscraper.WorldBounds
     public class WorldBoundsController : Singleton<WorldBoundsController>
     {
         private const float RaycasterGap = 3f;
+        private const float LimiterAdditionHeight = 200f;
 
         [OnThis, SerializeField] private BoxCollider2D bounds;
         [SerializeField] private CinemachineConfiner2D confiner;
@@ -19,8 +20,12 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private EdgeCollider2D rightRaycaster;
         [SerializeField] private float additionalDistanceFromSide;
         [SerializeField] private Transform floor;
+        [SerializeField] private EdgeCollider2D leftLimiter;
+        [SerializeField] private EdgeCollider2D rightLimiter;
 
-        public static float UpperBoundY => Instance.bounds.size.y - Instance.lowerBound.position.y;
+        public static float UpperBound => Instance.bounds.size.y - Instance.lowerBound.position.y;
+        public static float LeftBound => -(Instance.bounds.size.x / 2f - Instance.bounds.offset.x);
+        public static float RightBound => Instance.bounds.size.x / 2f + Instance.bounds.offset.x;
 
         protected override void Awake()
         {
@@ -73,6 +78,15 @@ namespace Skyscraper.WorldBounds
 
             floor.localScale = floor.localScale.With(x: newBoundsSize.x + RaycasterGap * 2f);
             floor.position = floor.position.With(x: newBoundsOffset.x);
+
+            leftLimiter.transform.position = leftRaycaster.transform.position.With(x: newLeftPoint);
+            points = leftLimiter.points;
+            points[1] = points[1].With(y: newUpperPoint + LimiterAdditionHeight);
+            leftLimiter.points = points;
+            rightLimiter.transform.position = leftRaycaster.transform.position.With(x: newRightPoint);
+            points = rightLimiter.points;
+            points[1] = points[1].With(y: newUpperPoint + LimiterAdditionHeight);
+            rightLimiter.points = points;
 
             confiner.InvalidateBoundingShapeCache();
         }

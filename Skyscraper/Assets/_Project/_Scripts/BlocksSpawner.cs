@@ -31,7 +31,7 @@ public class BlocksSpawner : MonoBehaviour
         var newBlock = Instantiate(blockToSpawn, transform);
         newBlock.GetComponent<BlockSilhouetteController>().Show();
         var distanceInSeconds = 0.5f * -Physics2D.gravity.y * Mathf.Pow(timeToReachUpperBound, 2f);
-        newBlock.transform.position = spawnPoint.position.With(y: WorldBoundsController.UpperBoundY + distanceInSeconds);
+        newBlock.transform.position = spawnPoint.position.With(y: WorldBoundsController.RightBound + distanceInSeconds);
         BlockMovementController.SetCurrentBlock(newBlock.GetComponent<BlockMover>());
     }
 

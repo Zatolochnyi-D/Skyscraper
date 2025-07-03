@@ -10,6 +10,7 @@ public class BlockLandingDetector : MonoBehaviour
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
     [SerializeField] private float speedEpsilon = 0.0002f;
     [SerializeField] private float timeToStandNotMoved = 4f;
+    [SerializeField] private LayerMask ignoreCollisionLayer;
 
     private bool firstCollisionHappened;
 
@@ -17,10 +18,13 @@ public class BlockLandingDetector : MonoBehaviour
     {
         if (!firstCollisionHappened)
         {
-            // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
-            firstCollisionHappened = true;
-            BlockMovementController.RemoveCurrentBlock();
-            StartCoroutine(MovementCheckCycle());
+            if (collision.otherCollider.gameObject.layer != ignoreCollisionLayer)
+            {
+                // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
+                firstCollisionHappened = true;
+                BlockMovementController.RemoveCurrentBlock();
+                StartCoroutine(MovementCheckCycle());
+            }
         }
     }
 
