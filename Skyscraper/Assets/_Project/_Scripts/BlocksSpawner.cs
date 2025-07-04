@@ -33,6 +33,7 @@ public class BlocksSpawner : MonoBehaviour
         var distanceInSeconds = 0.5f * -Physics2D.gravity.y * Mathf.Pow(timeToReachUpperBound, 2f);
         newBlock.transform.position = spawnPoint.position.With(y: WorldBoundsController.RightBound + distanceInSeconds);
         BlockMovementController.SetCurrentBlock(newBlock.GetComponent<BlockMover>());
+        PointerPositionController.SetActiveBlock(newBlock.transform);
     }
 
     private void SpawnAfterInterval()
