@@ -1,6 +1,7 @@
 using System.Collections;
 using ThreeDent.Helpers.Extensions;
 using ThreeDent.Helpers.Tools;
+using TMPro;
 using UnityEngine;
 
 public class PointerController : Singleton<PointerController>
@@ -8,6 +9,8 @@ public class PointerController : Singleton<PointerController>
     [SerializeField] private RectTransform parentCanvasTransform;
     [SerializeField] private RectTransform pointer;
     [SerializeField] private float offset;
+    [SerializeField] private RectTransform countdownPivot;
+    [SerializeField] private TextMeshProUGUI countdown;
 
     private Transform currentActiveBlock;
     private Coroutine trackingCoroutine;
@@ -16,12 +19,14 @@ public class PointerController : Singleton<PointerController>
     {
         base.Awake();
         pointer.gameObject.SetActive(false);
+        countdown.gameObject.SetActive(false);
     }
 
     public static void SetActiveBlock(Transform newActiveBlock)
     {
         Instance.currentActiveBlock = newActiveBlock;
         Instance.pointer.gameObject.SetActive(true);
+        Instance.countdown.gameObject.SetActive(true);
         Instance.trackingCoroutine = Instance.StartCoroutine(Instance.TrackingCycle());
     }
 
@@ -29,6 +34,7 @@ public class PointerController : Singleton<PointerController>
     {
         Instance.currentActiveBlock = null;
         Instance.pointer.gameObject.SetActive(false);
+        Instance.countdown.gameObject.SetActive(false);
         Instance.StopCoroutine(Instance.trackingCoroutine);
     }
 
@@ -51,6 +57,23 @@ public class PointerController : Singleton<PointerController>
             var blockX = currentActiveBlock.position.x;
             var pixels = (blockX - cameraX) * canvasPixelsPerUnit;
             pointer.anchoredPosition = pointer.anchoredPosition.With(x: Mathf.Clamp(pixels, minX, maxX));
+
+            var cameraUpperBoundY = Camera.main.transform.position.y + Camera.main.orthographicSize;
+            var blockY = currentActiveBlock.position.y;
+            var distanceToTravel = blockY - cameraUpperBoundY;
+
+            if (distanceToTravel <= 0f)
+            {
+                RemoveActiveBlock();
+                break;
+            }
+
+            var blockBody = currentActiveBlock.GetComponent<Rigidbody2D>();
+            var timeToReachUpperBound = (Mathf.Sqrt(Mathf.Pow(-blockBody.linearVelocity.y, 2) + 2 * -Physics2D.gravity.y * distanceToTravel) - -blockBody.linearVelocity.y) / -Physics2D.gravity.y;
+            countdown.text = timeToReachUpperBound.ToString();
+
+            countdown.transform.position = countdownPivot.position;
+
 
             yield return null;
         }
