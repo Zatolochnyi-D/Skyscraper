@@ -2,9 +2,8 @@ using System.Collections;
 using ThreeDent.Helpers.Extensions;
 using ThreeDent.Helpers.Tools;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PointerPositionController : Singleton<PointerPositionController>
+public class PointerController : Singleton<PointerController>
 {
     [SerializeField] private RectTransform parentCanvasTransform;
     [SerializeField] private RectTransform pointer;
@@ -13,15 +12,23 @@ public class PointerPositionController : Singleton<PointerPositionController>
     private Transform currentActiveBlock;
     private Coroutine trackingCoroutine;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        pointer.gameObject.SetActive(false);
+    }
+
     public static void SetActiveBlock(Transform newActiveBlock)
     {
         Instance.currentActiveBlock = newActiveBlock;
+        Instance.pointer.gameObject.SetActive(true);
         Instance.trackingCoroutine = Instance.StartCoroutine(Instance.TrackingCycle());
     }
 
     public static void RemoveActiveBlock()
     {
         Instance.currentActiveBlock = null;
+        Instance.pointer.gameObject.SetActive(false);
         Instance.StopCoroutine(Instance.trackingCoroutine);
     }
 
