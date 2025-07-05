@@ -43,9 +43,7 @@ public class PointerPositionController : Singleton<PointerPositionController>
             var cameraX = Camera.main.transform.position.x;
             var blockX = currentActiveBlock.position.x;
             var pixels = (blockX - cameraX) * canvasPixelsPerUnit;
-            pixels = Mathf.Min(maxX, pixels);
-            pixels = Mathf.Max(minX, pixels);
-            pointer.anchoredPosition = pointer.anchoredPosition.With(x: pixels);
+            pointer.anchoredPosition = pointer.anchoredPosition.With(x: Mathf.Clamp(pixels, minX, maxX));
 
             yield return null;
         }
