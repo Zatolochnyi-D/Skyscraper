@@ -1205,7 +1205,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onEdgeDetector: {fileID: 1307043982}
-  padding: 0
 --- !u!4 &2077704754
 Transform:
   m_ObjectHideFlags: 0
