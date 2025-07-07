@@ -6,7 +6,6 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
 {
     private GameObject activeBlock;
     private BlockMover activeBlockMover;
-    private Rigidbody2D activeBlockRigidbody;
 
     public Transform ActiveBlockTransform => activeBlock.transform;
 
@@ -17,9 +16,6 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
         activeBlockMover = activeBlock.GetComponent<BlockMover>();
         activeBlockMover.Activate();
 
-        activeBlockRigidbody = activeBlock.GetComponent<Rigidbody2D>();
-        activeBlockRigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-
         EventBroker.Invoke<ActiveBlockSet>();
     }
 
@@ -29,9 +25,6 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
 
         activeBlockMover.Deactivate();
         activeBlockMover = null;
-
-        activeBlockRigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
-        activeBlockRigidbody = null;
 
         EventBroker.Invoke<ActiveBlockUnset>();
     }

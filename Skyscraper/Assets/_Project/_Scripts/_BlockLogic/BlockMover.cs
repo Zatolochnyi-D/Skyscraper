@@ -9,6 +9,8 @@ public class BlockMover : MonoBehaviour
     [SerializeField] private float movementPerSecond = 4f;
     [SerializeField] private float additionalFallPerSecond = 10f;
 
+    private float previousGravityScale;
+
     public void MoveContinuous(Vector2 step)
     {
         physicalBody.position += step;
@@ -39,6 +41,10 @@ public class BlockMover : MonoBehaviour
         InputManager.OnMovement += MoveCurrentBlock;
         InputManager.OnRotation += RotateCurrentBlock;
         InputManager.OnSpeedup += SpeedUpBlockFall;
+
+        physicalBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        previousGravityScale = physicalBody.gravityScale;
+        physicalBody.gravityScale = 0f;
     }
 
     public void Deactivate()
@@ -46,5 +52,8 @@ public class BlockMover : MonoBehaviour
         InputManager.OnMovement -= MoveCurrentBlock;
         InputManager.OnRotation -= RotateCurrentBlock;
         InputManager.OnSpeedup -= SpeedUpBlockFall;
+
+        physicalBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+        physicalBody.gravityScale = previousGravityScale;
     }
 }
