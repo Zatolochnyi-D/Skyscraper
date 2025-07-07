@@ -113,5 +113,5 @@ MonoBehaviour:
   physicalBody: {fileID: 1961812567690002883}
   fallSpeed: 15
   rotationPerSecond: 180
-  movementPerSecond: 4
+  speedUpMultiplication: 3
   additionalFallPerSecond: 10

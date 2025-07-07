@@ -16,7 +16,8 @@ namespace Skyscraper.Inputs
         public static event Action<float> OnMovement;
         public static event Action<float> OnRotation;
         public static event Action<float> OnScroll;
-        public static event Action OnSpeedup;
+        public static event Action OnSpeedupStarted;
+        public static event Action OnSpeedupCanceled;
 
         [SerializeField] private MouseOnEdgeDetector onEdgeDetector;
 
@@ -47,9 +48,8 @@ namespace Skyscraper.Inputs
             if (scrollValue != 0)
                 OnScroll?.Invoke(scrollValue);
 
-            var speedupValue = inputActions.Game.SpeedupFall.ReadValue<float>();
-            if (speedupValue != 0f)
-                OnSpeedup?.Invoke();
+            inputActions.Game.SpeedupFall.started += (_) => OnSpeedupStarted?.Invoke();
+            inputActions.Game.SpeedupFall.canceled += (_) => OnSpeedupCanceled?.Invoke();
         }
 
         public static void SwitchMode(InputModes mode)
