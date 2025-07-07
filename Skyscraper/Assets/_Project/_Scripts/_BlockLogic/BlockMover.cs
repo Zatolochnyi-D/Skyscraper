@@ -7,10 +7,11 @@ public class BlockMover : MonoBehaviour
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float speedUpMultiplication = 2f;
-    [SerializeField] private float additionalFallPerSecond = 10f;
 
     private float previousGravityScale;
     private Vector2 previousFallSpeed;
+
+    public Rigidbody2D PhysicalBody => physicalBody;
 
     public void MoveContinuous(Vector2 step)
     {

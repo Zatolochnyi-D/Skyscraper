@@ -77,8 +77,7 @@ public class PointerController : Singleton<PointerController>
                 break;
             }
 
-            var blockBody = currentActiveBlock.GetComponent<Rigidbody2D>();
-            var timeToReachUpperBound = (Mathf.Sqrt(Mathf.Pow(-blockBody.linearVelocity.y, 2) + 2 * -Physics2D.gravity.y * distanceToTravel) - -blockBody.linearVelocity.y) / -Physics2D.gravity.y;
+            var timeToReachUpperBound = distanceToTravel / ActiveBlockManager.Instance.ActiveBodyRigidbody.linearVelocity.magnitude;
             countdown.text = timeToReachUpperBound.ToString();
 
             countdown.transform.position = countdownPivot.position;

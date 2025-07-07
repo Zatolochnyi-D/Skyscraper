@@ -6,6 +6,9 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
 {
     [SerializeField] private float fallSpeed;
 
+    public float FallSpeed => fallSpeed;
+    public Rigidbody2D ActiveBodyRigidbody => activeBlockMover.PhysicalBody;
+
     private GameObject activeBlock;
     private BlockMover activeBlockMover;
 
