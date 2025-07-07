@@ -111,7 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalBody: {fileID: 1961812567690002883}
-  fallSpeed: 15
   rotationPerSecond: 180
   speedUpMultiplication: 3
   additionalFallPerSecond: 10

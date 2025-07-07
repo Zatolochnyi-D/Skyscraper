@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ActiveBlockManager : Singleton<ActiveBlockManager>
 {
+    [SerializeField] private float fallSpeed;
+
     private GameObject activeBlock;
     private BlockMover activeBlockMover;
 
@@ -14,7 +16,7 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
         activeBlock = newActiveBlock;
 
         activeBlockMover = activeBlock.GetComponent<BlockMover>();
-        activeBlockMover.Activate();
+        activeBlockMover.Activate(fallSpeed);
 
         EventBroker.Invoke<ActiveBlockSet>();
     }

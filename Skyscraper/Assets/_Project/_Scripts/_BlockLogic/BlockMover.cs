@@ -5,7 +5,6 @@ using UnityEngine;
 public class BlockMover : MonoBehaviour
 {
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
-    [SerializeField] private float fallSpeed;
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float speedUpMultiplication = 2f;
     [SerializeField] private float additionalFallPerSecond = 10f;
@@ -44,7 +43,7 @@ public class BlockMover : MonoBehaviour
         physicalBody.linearVelocity = previousFallSpeed;
     }
 
-    public void Activate()
+    public void Activate(float fallSpeed)
     {
         InputManager.OnMovement += MoveCurrentBlock;
         InputManager.OnRotation += RotateCurrentBlock;
