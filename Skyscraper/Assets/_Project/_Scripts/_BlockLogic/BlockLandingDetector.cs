@@ -15,18 +15,15 @@ public class BlockLandingDetector : MonoBehaviour
 
     private bool firstCollisionHappened;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!firstCollisionHappened)
+        if (!firstCollisionHappened && collision.otherCollider.gameObject.layer != ignoreCollisionLayer)
         {
-            if (collision.otherCollider.gameObject.layer != ignoreCollisionLayer)
-            {
-                // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
-                firstCollisionHappened = true;
-                BlockMovementController.RemoveCurrentBlock();
-                PointerController.RemoveActiveBlock();
-                StartCoroutine(MovementCheckCycle());
-            }
+            // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
+            firstCollisionHappened = true;
+            ActiveBlockManager.Instance.RemoveActiveBlock();
+            // PointerController.RemoveActiveBlock();
+            StartCoroutine(MovementCheckCycle());
         }
     }
 
@@ -48,4 +45,4 @@ public class BlockLandingDetector : MonoBehaviour
     }
 }
 
-public class BlockLandedEvent : IEvent {}
+public class BlockLandedEvent : IEvent { }

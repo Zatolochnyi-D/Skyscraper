@@ -5,23 +5,21 @@ using UnityEngine;
 
 public class BlocksSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPoint;
-    [SerializeField] private Collider2D heightProbe;
     [SerializeField] private GameObject blockToSpawn;
     [SerializeField] private float additionalSpawnInterval = 1f;
     [SerializeField] private float timeToReachUpperBound = 4f;
 
-    void Awake()
+    private void Awake()
     {
         EventBroker.Subscribe<BlockLandedEvent>(SpawnAfterInterval);
     }
 
-    void Start()
+    private void Start()
     {
         Spawn();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         EventBroker.Unsubscribe<BlockLandedEvent>(SpawnAfterInterval);
     }
@@ -31,9 +29,10 @@ public class BlocksSpawner : MonoBehaviour
         var newBlock = Instantiate(blockToSpawn, transform);
         newBlock.GetComponent<BlockSilhouetteController>().Show();
         var distanceInSeconds = 0.5f * -Physics2D.gravity.y * Mathf.Pow(timeToReachUpperBound, 2f);
-        newBlock.transform.position = spawnPoint.position.With(y: WorldBoundsController.RightBound + distanceInSeconds);
-        BlockMovementController.SetCurrentBlock(newBlock.GetComponent<BlockMover>());
-        PointerController.SetActiveBlock(newBlock.transform);
+        newBlock.transform.position = new(0f, WorldBoundsController.RightBound + distanceInSeconds, 0f);
+
+        ActiveBlockManager.Instance.SetActiveBlock(newBlock);
+        // PointerController.SetActiveBlock(newBlock.transform);
     }
 
     private void SpawnAfterInterval()

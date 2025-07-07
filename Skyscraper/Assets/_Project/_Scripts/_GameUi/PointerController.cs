@@ -1,5 +1,6 @@
 using System.Collections;
 using ThreeDent.DevelopmentTools;
+using ThreeDent.EventBroker;
 using ThreeDent.Helpers.Extensions;
 using TMPro;
 using UnityEngine;
@@ -18,24 +19,26 @@ public class PointerController : Singleton<PointerController>
     protected override void Awake()
     {
         base.Awake();
-        pointer.gameObject.SetActive(false);
-        countdown.gameObject.SetActive(false);
+        Deactivate();
+        EventBroker.Subscribe<ActiveBlockSet>(Activate);
+        EventBroker.Subscribe<ActiveBlockUnset>(Deactivate);
     }
 
-    public static void SetActiveBlock(Transform newActiveBlock)
+    private void Activate()
     {
-        Instance.currentActiveBlock = newActiveBlock;
+        Instance.currentActiveBlock = ActiveBlockManager.Instance.ActiveBlockTransform;
         Instance.pointer.gameObject.SetActive(true);
         Instance.countdown.gameObject.SetActive(true);
         Instance.trackingCoroutine = Instance.StartCoroutine(Instance.TrackingCycle());
     }
 
-    public static void RemoveActiveBlock()
+    private void Deactivate()
     {
         Instance.currentActiveBlock = null;
-        Instance.pointer.gameObject.SetActive(false);
-        Instance.countdown.gameObject.SetActive(false);
-        Instance.StopCoroutine(Instance.trackingCoroutine);
+        pointer.gameObject.SetActive(false);
+        countdown.gameObject.SetActive(false);
+        if (trackingCoroutine != null)
+            Instance.StopCoroutine(Instance.trackingCoroutine);
     }
 
     private IEnumerator TrackingCycle()
@@ -64,7 +67,7 @@ public class PointerController : Singleton<PointerController>
 
             if (distanceToTravel <= 0f)
             {
-                RemoveActiveBlock();
+                Deactivate();
                 break;
             }
 
