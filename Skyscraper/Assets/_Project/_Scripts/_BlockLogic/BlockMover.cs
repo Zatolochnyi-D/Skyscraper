@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockMover : MonoBehaviour
 {
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
+    [SerializeField] private float fallSpeed;
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float movementPerSecond = 4f;
     [SerializeField] private float additionalFallPerSecond = 10f;
@@ -45,6 +46,7 @@ public class BlockMover : MonoBehaviour
         physicalBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         previousGravityScale = physicalBody.gravityScale;
         physicalBody.gravityScale = 0f;
+        physicalBody.linearVelocity = new(0f, -fallSpeed);
     }
 
     public void Deactivate()
