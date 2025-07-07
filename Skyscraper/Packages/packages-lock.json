@@ -1,29 +1,39 @@
 {
   "dependencies": {
-    "com.threedent.eventbroker": {
-      "version": "https://github.com/Zatolochnyi-D/EventBroker.git",
+    "com.threedent.developmenttools": {
+      "version": "https://github.com/Zatolochnyi-D/UnityDevelopmentTools.git#version-1",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.threedent.helpers": "1.0.1"
+        "com.threedent.helpers": "1.0.2"
       },
-      "hash": "fe8fee8d985ccd555334d29498a7e460f3948588"
+      "hash": "d235a21fa0c5b611379f81434d4275485ab4001b"
+    },
+    "com.threedent.eventbroker": {
+      "version": "https://github.com/Zatolochnyi-D/EventBroker.git#version-2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.threedent.developmenttools": "1.0.0"
+      },
+      "hash": "4d549503b66084c4b4c7bf25a982ffe04d06770a"
     },
     "com.threedent.helpers": {
-      "version": "https://github.com/Zatolochnyi-D/UnityHelpers.git",
+      "version": "https://github.com/Zatolochnyi-D/UnityHelpers.git#version-3",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "88ae687b773e7f6e50a0be40f953d391968091af"
+      "hash": "c24264f5f971715f0ffc48cd96a2f23e4d540970"
     },
     "com.threedent.scenemanagement": {
-      "version": "https://github.com/Zatolochnyi-D/UnitySceneManagement.git",
+      "version": "https://github.com/Zatolochnyi-D/UnitySceneManagement.git#version-2",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.threedent.helpers": "1.0.1"
+        "com.threedent.helpers": "1.0.2",
+        "com.threedent.developmenttools": "1.0.0"
       },
-      "hash": "bec7e462f502c4000baf1b59fc74328a5c480c3e"
+      "hash": "82735221e8da3e8d512426276b4a952fb3b8bbef"
     },
     "com.unity.2d.animation": {
       "version": "10.1.4",

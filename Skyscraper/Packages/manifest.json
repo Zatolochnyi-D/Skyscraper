@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "com.threedent.eventbroker": "https://github.com/Zatolochnyi-D/EventBroker.git",
-    "com.threedent.helpers": "https://github.com/Zatolochnyi-D/UnityHelpers.git",
-    "com.threedent.scenemanagement": "https://github.com/Zatolochnyi-D/UnitySceneManagement.git",
+    "com.threedent.developmenttools": "https://github.com/Zatolochnyi-D/UnityDevelopmentTools.git#version-1",
+    "com.threedent.eventbroker": "https://github.com/Zatolochnyi-D/EventBroker.git#version-2",
+    "com.threedent.helpers": "https://github.com/Zatolochnyi-D/UnityHelpers.git#version-3",
+    "com.threedent.scenemanagement": "https://github.com/Zatolochnyi-D/UnitySceneManagement.git#version-2",
     "com.unity.cinemachine": "3.1.4",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.feature.2d": "2.0.1",

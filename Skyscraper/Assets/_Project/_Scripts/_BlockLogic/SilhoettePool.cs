@@ -1,4 +1,4 @@
-using ThreeDent.Helpers.Tools;
+using ThreeDent.DevelopmentTools;
 using UnityEngine;
 
 public class SilhoettePool : Singleton<SilhoettePool>

@@ -2,6 +2,7 @@ using UnityEngine;
 using ThreeDent.EventBroker;
 using System.Collections;
 using System;
+using ThreeDent.DevelopmentTools.Attributes;
 
 public class BlockLandingDetector : MonoBehaviour
 {

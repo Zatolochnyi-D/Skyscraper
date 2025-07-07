@@ -1,24 +1,13 @@
 using System;
-using ThreeDent.Helpers.Tools;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ThreeDent.DevelopmentTools;
 
 namespace Skyscraper.Inputs
 {
     public enum InputModes
     {
         Game,
-    }
-
-    public abstract class InputManager<TInputActions> : Singleton<InputManager<TInputActions>> where TInputActions : IInputActionCollection2, IDisposable, new()
-    {
-        protected TInputActions inputActions;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            inputActions = new();
-        }
     }
 
     public class InputManager : Singleton<InputManager>
