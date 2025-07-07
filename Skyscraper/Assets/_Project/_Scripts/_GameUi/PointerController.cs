@@ -24,6 +24,12 @@ public class PointerController : Singleton<PointerController>
         EventBroker.Subscribe<ActiveBlockUnset>(Deactivate);
     }
 
+    private void OnDestroy()
+    {
+        EventBroker.Unsubscribe<ActiveBlockSet>(Activate);
+        EventBroker.Unsubscribe<ActiveBlockUnset>(Deactivate);
+    }
+
     private void Activate()
     {
         Instance.currentActiveBlock = ActiveBlockManager.Instance.ActiveBlockTransform;
