@@ -66,6 +66,12 @@ public class PointerController : Singleton<PointerController>
             var blockX = currentActiveBlock.position.x;
             var pixels = (blockX - cameraX) * canvasPixelsPerUnit;
             pointer.anchoredPosition = pointer.anchoredPosition.With(x: Mathf.Clamp(pixels, minX, maxX));
+            if (pixels < minX)
+                pointer.eulerAngles = new(0f, 0f, 45f);
+            else if (pixels > maxX)
+                pointer.eulerAngles = new(0f, 0f, -45f);
+            else
+                pointer.eulerAngles = Vector3.zero;
 
             var cameraUpperBoundY = Camera.main.transform.position.y + Camera.main.orthographicSize;
             var blockY = currentActiveBlock.position.y;
@@ -78,7 +84,7 @@ public class PointerController : Singleton<PointerController>
             }
 
             var timeToReachUpperBound = distanceToTravel / ActiveBlockManager.Instance.ActiveBodyRigidbody.linearVelocity.magnitude;
-            countdown.text = timeToReachUpperBound.ToString();
+            countdown.text = Mathf.CeilToInt(timeToReachUpperBound).ToString();
 
             countdown.transform.position = countdownPivot.position;
 
