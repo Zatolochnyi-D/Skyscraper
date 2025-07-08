@@ -88,7 +88,6 @@ public class PointerController : Singleton<PointerController>
 
             countdown.transform.position = countdownPivot.position;
 
-
             yield return null;
         }
     }

@@ -27,6 +27,7 @@ namespace Skyscraper.WorldBounds
         public static float UpperBound => Instance.bounds.size.y - Instance.lowerBound.position.y;
         public static float LeftBound => -(Instance.bounds.size.x / 2f - Instance.bounds.offset.x);
         public static float RightBound => Instance.bounds.size.x / 2f + Instance.bounds.offset.x;
+        public static Vector2 BoundSize => Instance.bounds.size;
 
         protected override void Awake()
         {

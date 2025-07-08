@@ -1719,6 +1719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneCamera: {fileID: 1766534842}
+  confiner: {fileID: 1766534841}
   movementSpeed: 10
   minZoom: 2
   maxZoom: 8

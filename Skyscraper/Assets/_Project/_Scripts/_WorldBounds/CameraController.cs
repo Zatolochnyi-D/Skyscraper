@@ -8,9 +8,9 @@ namespace Skyscraper.WorldBounds
     public class CameraController : MonoBehaviour
     {
         [OnThis, SerializeField] private CinemachineCamera sceneCamera;
+        [OnThis, SerializeField] private CinemachineConfiner2D confiner;
         [SerializeField] private float movementSpeed = 10f;
         [SerializeField] private float minZoom = 2f;
-        [SerializeField] private float maxZoom = 8f;
         [SerializeField] private float zoomFactor = 0.035f;
 
         private void Awake()
@@ -27,7 +27,17 @@ namespace Skyscraper.WorldBounds
         private void Zoom(float direction)
         {
             var newSize = sceneCamera.Lens.OrthographicSize + direction * zoomFactor;
+
+            float maxZoom;
+            if (WorldBoundsController.BoundSize.x / WorldBoundsController.BoundSize.y > sceneCamera.Lens.Aspect)
+                maxZoom = WorldBoundsController.BoundSize.y / 2;
+            else
+                maxZoom = WorldBoundsController.BoundSize.x / 2 / sceneCamera.Lens.Aspect;
+
+            var previousPosition = sceneCamera.transform.position;
             sceneCamera.Lens.OrthographicSize = Mathf.Clamp(newSize, minZoom, maxZoom);
+            sceneCamera.transform.position = previousPosition;
+            confiner.InvalidateBoundingShapeCache();
         }
     }
 }
