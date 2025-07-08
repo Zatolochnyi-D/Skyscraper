@@ -5,20 +5,32 @@ using UnityEngine;
 public class BlockMover : MonoBehaviour
 {
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
+    [OnThis, SerializeField] private BlockLandingDetector landingDetector;
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float speedUpMultiplication = 2f;
+    [SerializeField] private float massOnLand = 20f;
 
     private float previousGravityScale;
     private Vector2 previousFallSpeed;
 
     public Rigidbody2D PhysicalBody => physicalBody;
 
-    public void MoveContinuous(Vector2 step)
+    private void Awake()
+    {
+        landingDetector.OnBlockLanded += SetMass;
+    }
+
+    private void SetMass()
+    {
+        physicalBody.mass = massOnLand;
+    }
+
+    private void MoveContinuous(Vector2 step)
     {
         physicalBody.position += step;
     }
 
-    public void RotateContinuous(float angle)
+    private void RotateContinuous(float angle)
     {
         physicalBody.SetRotation(physicalBody.rotation + angle);
     }
