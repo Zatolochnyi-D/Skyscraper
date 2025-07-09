@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalBody: {fileID: 1961812567690002883}
+  silhouetteController: {fileID: -8921419403444003612}
   speedEpsilon: 0.0002
   timeToStandNotMoved: 4
   ignoreCollisionLayer:
@@ -93,7 +94,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockCollider: {fileID: 0}
-  landingDetector: {fileID: -7272220728812228917}
   silhoetteIndex: 0
   layersToCastSilhouetteOn:
     serializedVersion: 2

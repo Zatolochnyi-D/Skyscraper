@@ -6,16 +6,10 @@ using UnityEngine;
 public class BlockSilhouetteController : MonoBehaviour
 {
     [OnThis, SerializeField] private Collider2D blockCollider;
-    [OnThis, SerializeField] private BlockLandingDetector landingDetector;
     [SerializeField] private int silhoetteIndex;
     [SerializeField] private LayerMask layersToCastSilhouetteOn;   
 
     private GameObject silhoette;
-
-    void Awake()
-    {
-        landingDetector.OnBlockLanded += Hide;
-    }
 
     private IEnumerator SilhoetteUpdateCycle()
     {
@@ -39,7 +33,7 @@ public class BlockSilhouetteController : MonoBehaviour
         StartCoroutine(SilhoetteUpdateCycle());
     }
 
-    private void Hide()
+    public void Hide()
     {
         StopAllCoroutines();
         silhoette.SetActive(false);

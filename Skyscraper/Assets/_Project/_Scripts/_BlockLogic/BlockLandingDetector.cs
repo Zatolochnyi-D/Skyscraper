@@ -9,6 +9,7 @@ public class BlockLandingDetector : MonoBehaviour
     public event Action OnBlockLanded;
 
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
+    [OnThis, SerializeField] private BlockSilhouetteController silhouetteController;
     [SerializeField] private float speedEpsilon = 0.0002f;
     [SerializeField] private float timeToStandNotMoved = 4f;
     [SerializeField] private LayerMask ignoreCollisionLayer;
@@ -21,6 +22,7 @@ public class BlockLandingDetector : MonoBehaviour
         {
             // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
             firstCollisionHappened = true;
+            silhouetteController.Hide();
             ActiveBlockManager.Instance.RemoveActiveBlock();
             StartCoroutine(MovementCheckCycle());
         }
