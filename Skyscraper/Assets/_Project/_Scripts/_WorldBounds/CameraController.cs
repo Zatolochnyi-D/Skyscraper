@@ -9,7 +9,8 @@ namespace Skyscraper.WorldBounds
     {
         [OnThis, SerializeField] private CinemachineCamera sceneCamera;
         [OnThis, SerializeField] private CinemachineConfiner2D confiner;
-        [SerializeField] private float movementSpeed = 10f;
+        [SerializeField] private float minimalMovementSpeed = 5f;
+        [SerializeField] private float zoomSpeedInfluence = 0.2f; // how much % each point of zoom increases speed
         [SerializeField] private float minZoom = 2f;
         [SerializeField] private float zoomFactor = 0.035f;
 
@@ -21,6 +22,7 @@ namespace Skyscraper.WorldBounds
 
         private void Move(Vector2 direction)
         {
+            var movementSpeed = minimalMovementSpeed * (1f + zoomSpeedInfluence * (sceneCamera.Lens.OrthographicSize - minZoom));
             transform.position += (Vector3)(Time.deltaTime * movementSpeed * direction);
         }
 
