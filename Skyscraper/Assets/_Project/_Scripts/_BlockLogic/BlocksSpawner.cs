@@ -29,7 +29,7 @@ public class BlocksSpawner : MonoBehaviour
         var newBlock = Instantiate(blockToSpawn, transform);
         newBlock.GetComponent<BlockSilhouetteController>().Show();
         var distanceInSeconds = ActiveBlockManager.Instance.FallSpeed * timeToReachUpperBound;
-        newBlock.transform.position = new(0f, WorldBoundsController.UpperBound + distanceInSeconds, 0f);
+        newBlock.transform.position = new(Camera.main.transform.position.x, WorldBoundsController.UpperBound + distanceInSeconds, 0f);
 
         ActiveBlockManager.Instance.SetActiveBlock(newBlock);
     }

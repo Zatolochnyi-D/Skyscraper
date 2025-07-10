@@ -12,6 +12,7 @@ public class BlockMover : MonoBehaviour
 
     private float previousGravityScale;
     private Vector2 previousFallSpeed;
+    private bool isSpedUp;
 
     public Rigidbody2D PhysicalBody => physicalBody;
 
@@ -47,13 +48,18 @@ public class BlockMover : MonoBehaviour
 
     private void SpeedUpBlockFall()
     {
+        isSpedUp = true;
         previousFallSpeed = physicalBody.linearVelocity;
         physicalBody.linearVelocity *= speedUpMultiplication;
     }
 
     private void SlowDownBlockFall()
     {
-        physicalBody.linearVelocity = previousFallSpeed;
+        if (isSpedUp)
+        {
+            physicalBody.linearVelocity = previousFallSpeed;
+            isSpedUp = false;
+        }
     }
 
     public void Activate(float fallSpeed)
