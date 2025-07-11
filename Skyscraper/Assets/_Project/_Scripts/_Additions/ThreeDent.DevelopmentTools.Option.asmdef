@@ -1,0 +1,14 @@
+{
+    "name": "ThreeDent.DevelopmentTools.Option",
+    "rootNamespace": "ThreeDent.DevelopmentTools.Option",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
