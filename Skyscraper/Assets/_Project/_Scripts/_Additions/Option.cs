@@ -51,7 +51,7 @@ namespace ThreeDent.DevelopmentTools.Option
             return option switch
             {
                 Some<TInput> x => Some(mappingFunction(x.Value)),
-                None<TInput> x => None<TOutput>(),
+                None<TInput> => None<TOutput>(),
                 _ => throw new OptionThirdVariantException(),
             };
         }
