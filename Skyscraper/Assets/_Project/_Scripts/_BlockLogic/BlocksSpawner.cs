@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BlocksSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject blockToSpawn;
     [SerializeField] private float additionalSpawnInterval = 1f;
     [SerializeField] private float timeToReachUpperBound = 4f;
 
@@ -26,7 +25,7 @@ public class BlocksSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        var newBlock = Instantiate(blockToSpawn, transform);
+        var newBlock = Instantiate(InventorySelectionController.Instance.GetCurrentSelectedBlock(), transform);
         newBlock.GetComponent<BlockSilhouetteController>().Show();
         var distanceInSeconds = ActiveBlockManager.Instance.FallSpeed * timeToReachUpperBound;
         newBlock.transform.position = new(Camera.main.transform.position.x, WorldBoundsController.UpperBound + distanceInSeconds, 0f);

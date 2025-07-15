@@ -137,6 +137,15 @@ namespace Skyscraper.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CycleSelection"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7871fa8-6bee-487a-b431-eb1ac17b85e9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -304,6 +313,17 @@ namespace Skyscraper.Inputs
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d7bead9-8611-4ab4-8f9f-ddafb93a68a1"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -317,6 +337,7 @@ namespace Skyscraper.Inputs
             m_Game_SpeedupFall = m_Game.FindAction("SpeedupFall", throwIfNotFound: true);
             m_Game_CameraMovement = m_Game.FindAction("CameraMovement", throwIfNotFound: true);
             m_Game_Scroll = m_Game.FindAction("Scroll", throwIfNotFound: true);
+            m_Game_CycleSelection = m_Game.FindAction("CycleSelection", throwIfNotFound: true);
         }
 
         ~@Inputs()
@@ -402,6 +423,7 @@ namespace Skyscraper.Inputs
         private readonly InputAction m_Game_SpeedupFall;
         private readonly InputAction m_Game_CameraMovement;
         private readonly InputAction m_Game_Scroll;
+        private readonly InputAction m_Game_CycleSelection;
         /// <summary>
         /// Provides access to input actions defined in input action map "Game".
         /// </summary>
@@ -433,6 +455,10 @@ namespace Skyscraper.Inputs
             /// Provides access to the underlying input action "Game/Scroll".
             /// </summary>
             public InputAction @Scroll => m_Wrapper.m_Game_Scroll;
+            /// <summary>
+            /// Provides access to the underlying input action "Game/CycleSelection".
+            /// </summary>
+            public InputAction @CycleSelection => m_Wrapper.m_Game_CycleSelection;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -474,6 +500,9 @@ namespace Skyscraper.Inputs
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @CycleSelection.started += instance.OnCycleSelection;
+                @CycleSelection.performed += instance.OnCycleSelection;
+                @CycleSelection.canceled += instance.OnCycleSelection;
             }
 
             /// <summary>
@@ -500,6 +529,9 @@ namespace Skyscraper.Inputs
                 @Scroll.started -= instance.OnScroll;
                 @Scroll.performed -= instance.OnScroll;
                 @Scroll.canceled -= instance.OnScroll;
+                @CycleSelection.started -= instance.OnCycleSelection;
+                @CycleSelection.performed -= instance.OnCycleSelection;
+                @CycleSelection.canceled -= instance.OnCycleSelection;
             }
 
             /// <summary>
@@ -575,6 +607,13 @@ namespace Skyscraper.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnScroll(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "CycleSelection" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnCycleSelection(InputAction.CallbackContext context);
         }
     }
 }

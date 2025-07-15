@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using ThreeDent.DevelopmentTools;
 
 namespace Skyscraper.Inputs
@@ -18,6 +17,7 @@ namespace Skyscraper.Inputs
         public static event Action<float> OnScroll;
         public static event Action OnSpeedupStarted;
         public static event Action OnSpeedupCanceled;
+        public static event Action OnCyclePressed;
 
         [SerializeField] private MouseOnEdgeDetector onEdgeDetector;
 
@@ -50,6 +50,7 @@ namespace Skyscraper.Inputs
 
             inputActions.Game.SpeedupFall.started += (_) => OnSpeedupStarted?.Invoke();
             inputActions.Game.SpeedupFall.canceled += (_) => OnSpeedupCanceled?.Invoke();
+            inputActions.Game.CycleSelection.performed += (_) => OnCyclePressed?.Invoke();
         }
 
         public static void SwitchMode(InputModes mode)

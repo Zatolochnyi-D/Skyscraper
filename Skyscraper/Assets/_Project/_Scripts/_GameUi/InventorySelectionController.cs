@@ -1,8 +1,10 @@
+using Skyscraper.Inputs;
+using ThreeDent.DevelopmentTools;
 using ThreeDent.DevelopmentTools.Attributes;
 using TMPro;
 using UnityEngine;
 
-public class InventorySelectionController : MonoBehaviour
+public class InventorySelectionController : Singleton<InventorySelectionController>
 {
     [IsChild(1), SerializeField] private GameObject sampleText;
     [SerializeField] private GameObject[] blocks;
@@ -12,8 +14,10 @@ public class InventorySelectionController : MonoBehaviour
     private TextMeshProUGUI[] texts;
     private int currentSelection = 0;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         sampleText.SetActive(false);
 
         textTransforms = new RectTransform[blocks.Length];
@@ -28,6 +32,13 @@ public class InventorySelectionController : MonoBehaviour
         }
 
         SetSelection(0);
+
+        InputManager.OnCyclePressed += CycleSelection;
+    }
+
+    private void CycleSelection()
+    {
+        SetSelection((currentSelection + 1) % blocks.Length);
     }
 
     private void SetSelection(int newSelection)
@@ -38,5 +49,10 @@ public class InventorySelectionController : MonoBehaviour
         currentSelection = newSelection;
         textTransforms[currentSelection].sizeDelta = new(0f, 100f);
         texts[currentSelection].fontSize = 72;
+    }
+
+    public GameObject GetCurrentSelectedBlock()
+    {
+        return blocks[currentSelection];
     }
 }
