@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: blockCollider
       value: 
       objectReference: {fileID: 3139860894437057710}
+    - target: {fileID: -8921419403444003612, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
+      propertyPath: silhoetteIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 121388637832669900, guid: a2e3782ff8b6245af9dcf333ab17bd42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
