@@ -2,24 +2,13 @@ using System;
 
 namespace ThreeDent.DevelopmentTools.Option
 {
-    [System.Serializable]
-    public class OptionNullValueProvidedException : System.Exception
+    [Serializable]
+    public class OptionNullValueProvidedException : Exception
     {
-        public OptionNullValueProvidedException() : base("There is another type of Option provided, what should not happen. Do not inherit Option class.") { }
+        public OptionNullValueProvidedException() { }
         public OptionNullValueProvidedException(string message) : base(message) { }
-        public OptionNullValueProvidedException(string message, System.Exception inner) : base(message, inner) { }
+        public OptionNullValueProvidedException(string message, Exception inner) : base(message, inner) { }
         protected OptionNullValueProvidedException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-    }
-
-    [System.Serializable]
-    public class OptionThirdVariantException : System.Exception
-    {
-        public OptionThirdVariantException() { }
-        public OptionThirdVariantException(string message) : base(message) { }
-        public OptionThirdVariantException(string message, System.Exception inner) : base(message, inner) { }
-        protected OptionThirdVariantException(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
@@ -38,7 +27,7 @@ namespace ThreeDent.DevelopmentTools.Option
             return new None<T>();
         }
 
-        public static Option<T> FromNullable<T>(T value)
+        public static Option<T> FromPossibleNull<T>(T value)
         {
             if (value == null)
                 return new None<T>();
@@ -46,14 +35,20 @@ namespace ThreeDent.DevelopmentTools.Option
                 return new Some<T>(value);
         }
 
+        public static T DefaultWith<T>(this Option<T> option, T defaultValue)
+        {
+            if (option is Some<T> x)
+                return x.Value;
+            else
+                return defaultValue;
+        }
+
         public static Option<TOutput> Map<TInput, TOutput>(this Option<TInput> option, Func<TInput, TOutput> mappingFunction)
         {
-            return option switch
-            {
-                Some<TInput> x => Some(mappingFunction(x.Value)),
-                None<TInput> => None<TOutput>(),
-                _ => throw new OptionThirdVariantException(),
-            };
+            if (option is Some<TInput> x)
+                return Some(mappingFunction(x.Value));
+            else
+                return None<TOutput>();
         }
     }
 
