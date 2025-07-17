@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class _SoundPlayer : MonoBehaviour
+public class SoundPlayer : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
