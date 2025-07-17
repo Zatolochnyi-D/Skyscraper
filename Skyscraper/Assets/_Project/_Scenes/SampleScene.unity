@@ -675,7 +675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4b2783915ac40f08fdda770061f4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockToSpawn: {fileID: 7136289735530710788, guid: 0bf6c3b1b48e44d5cb40517ea6630a83, type: 3}
   additionalSpawnInterval: 1
   timeToReachUpperBound: 4
 --- !u!1 &561206340
