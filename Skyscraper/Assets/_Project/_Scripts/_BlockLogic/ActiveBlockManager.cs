@@ -12,6 +12,7 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
     private GameObject activeBlock;
     private BlockMover activeBlockMover;
 
+    public GameObject ActiveBlock => activeBlock;
     public Transform ActiveBlockTransform => activeBlock.transform;
 
     public void SetActiveBlock(GameObject newActiveBlock)

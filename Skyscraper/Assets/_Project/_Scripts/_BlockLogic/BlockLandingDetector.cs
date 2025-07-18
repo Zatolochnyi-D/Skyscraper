@@ -7,6 +7,7 @@ using ThreeDent.DevelopmentTools.Attributes;
 public class BlockLandingDetector : MonoBehaviour
 {
     public event Action OnBlockLanded;
+    public event Action<Collision2D> OnBlockFirstCollision;
 
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
     [OnThis, SerializeField] private BlockSilhouetteController silhouetteController;
@@ -25,6 +26,7 @@ public class BlockLandingDetector : MonoBehaviour
             silhouetteController.Hide();
             ActiveBlockManager.Instance.RemoveActiveBlock();
             StartCoroutine(MovementCheckCycle());
+            OnBlockFirstCollision?.Invoke(collision);
         }
     }
 
