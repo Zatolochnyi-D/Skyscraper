@@ -1118,6 +1118,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 015554f6292b14181a3e23feec79531c, type: 3}
   soundDistance: 10
   volume: 0.5
+  velocityCutoff: 0.002
 --- !u!4 &963013361
 Transform:
   m_ObjectHideFlags: 0
