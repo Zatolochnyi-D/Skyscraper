@@ -7,7 +7,7 @@ public class SoundPlayer : MonoBehaviour
 {
     [OnThis, SerializeField] private BlockLandingDetector landingDetector;
     [SerializeField] private AudioClip[] hitSounds;
-    // [SerializeField] private AudioClip fallSound;
+    [SerializeField] private AudioClip fallSound;
     [SerializeField] private LayerMask ignoreCollisionLayers;
     [SerializeField] private float maxSpeedOfWeakSound = 5f;
     [SerializeField] private float maxSpeedOfMediumSound = 15f;
@@ -15,14 +15,34 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] private float strongVolume = 1f;
     [SerializeField] private float mediumVolume = 0.75f;
     [SerializeField] private float weakVolume = 0.45f;
+    [SerializeField] private float fallSoundDistance = 50f;
+
+    private AudioSource borrowedSource;
 
     private void Awake()
     {
         landingDetector.OnBlockFirstCollision += PlayFirstSound;
     }
-    
+
+    private void OnEnable()
+    {
+        borrowedSource = AudioPlayer.Instance.BorrowSource();
+        borrowedSource.gameObject.SetActive(true);
+        borrowedSource.clip = fallSound;
+        borrowedSource.loop = true;
+        borrowedSource.maxDistance = fallSoundDistance;
+        borrowedSource.transform.position = new Vector3(0f, 0f, Camera.main.transform.position.z);
+        borrowedSource.transform.parent = transform;
+        borrowedSource.Play();
+    }
+
     private void PlayFirstSound(Collision2D collision)
     {
+        borrowedSource.Stop();
+        borrowedSource.loop = false;
+        AudioPlayer.Instance.ReleaseSource(borrowedSource);
+        borrowedSource = null;
+        
         var velocity = collision.relativeVelocity.magnitude;
         float volume;
         if (velocity >= maxSpeedOfMediumSound)
@@ -37,8 +57,6 @@ public class SoundPlayer : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.otherCollider.gameObject.layer != ignoreCollisionLayers)
-        {
             GlobalSoundPlayer.Instance.RegisterCollision(collision);
-        }
     }
 }

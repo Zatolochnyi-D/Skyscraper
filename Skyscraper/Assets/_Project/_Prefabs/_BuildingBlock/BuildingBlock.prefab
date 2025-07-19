@@ -135,6 +135,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 54b6006f88cf547e480fbeb4a2ed436e, type: 3}
   - {fileID: 8300000, guid: babec03b9d99544d8839ef515576e307, type: 3}
   - {fileID: 8300000, guid: 015554f6292b14181a3e23feec79531c, type: 3}
+  fallSound: {fileID: 8300000, guid: 35ed3b7e077ca45309b0a2d72861d205, type: 3}
   ignoreCollisionLayers:
     serializedVersion: 2
     m_Bits: 128
@@ -144,3 +145,4 @@ MonoBehaviour:
   strongVolume: 1
   mediumVolume: 0.75
   weakVolume: 0.45
+  fallSoundDistance: 50

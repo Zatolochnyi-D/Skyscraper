@@ -48,5 +48,16 @@ namespace ThreeDent.DevelopmentTools.Option
         {
             PlayDistant2d(audio, position, Option.None<Camera>(), localVolume, maxDistance);
         }
+
+        public AudioSource BorrowSource()
+        {
+            return distantSource2dPool.Get().GetComponent<AudioSource>();
+        }
+
+        public void ReleaseSource(AudioSource source)
+        {
+            source.transform.parent = transform;
+            source.gameObject.SetActive(false);
+        }
     }
 }
