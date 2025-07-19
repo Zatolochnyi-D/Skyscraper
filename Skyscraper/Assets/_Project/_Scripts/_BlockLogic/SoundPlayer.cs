@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
+    [OnThis, SerializeField] private BlockLandingDetector landingDetector;
     [SerializeField] private AudioClip[] hitSounds;
     // [SerializeField] private AudioClip fallSound;
-    [OnThis, SerializeField] private BlockLandingDetector landingDetector;
     [SerializeField] private LayerMask ignoreCollisionLayers;
     [SerializeField] private float maxSpeedOfWeakSound = 5f;
     [SerializeField] private float maxSpeedOfMediumSound = 15f;
+    [SerializeField] private float soundDistance = 20f;
     [SerializeField] private float strongVolume = 1f;
     [SerializeField] private float mediumVolume = 0.75f;
     [SerializeField] private float weakVolume = 0.45f;
@@ -23,19 +24,21 @@ public class SoundPlayer : MonoBehaviour
     private void PlayFirstSound(Collision2D collision)
     {
         var velocity = collision.relativeVelocity.magnitude;
+        float volume;
         if (velocity >= maxSpeedOfMediumSound)
-            AudioPlayer.Instance.PlayGlobal(hitSounds.PeekItem(), strongVolume);
+            volume = strongVolume;
         else if (velocity >= maxSpeedOfWeakSound)
-            AudioPlayer.Instance.PlayGlobal(hitSounds.PeekItem(), mediumVolume);
+            volume = mediumVolume;
         else
-            AudioPlayer.Instance.PlayGlobal(hitSounds.PeekItem(), weakVolume);
+            volume = weakVolume;
+        AudioPlayer.Instance.PlayDistant2d(hitSounds.PeekItem(), transform.position, volume, soundDistance);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.otherCollider.gameObject.layer != ignoreCollisionLayers)
         {
-            
+            GlobalSoundPlayer.Instance.RegisterCollision(collision);
         }
     }
 }

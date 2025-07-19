@@ -128,18 +128,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2955574fa43754302b39db6fcf1be44a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  landingDetector: {fileID: -7272220728812228917}
   hitSounds:
   - {fileID: 8300000, guid: 3c0ddf5b14ae54337b38bcce755f5398, type: 3}
   - {fileID: 8300000, guid: 484713c2ca0254496b1cfd25164c0b2b, type: 3}
   - {fileID: 8300000, guid: 54b6006f88cf547e480fbeb4a2ed436e, type: 3}
   - {fileID: 8300000, guid: babec03b9d99544d8839ef515576e307, type: 3}
   - {fileID: 8300000, guid: 015554f6292b14181a3e23feec79531c, type: 3}
-  landingDetector: {fileID: -7272220728812228917}
   ignoreCollisionLayers:
     serializedVersion: 2
     m_Bits: 128
   maxSpeedOfWeakSound: 5
   maxSpeedOfMediumSound: 15
+  soundDistance: 20
   strongVolume: 1
   mediumVolume: 0.75
   weakVolume: 0.45
