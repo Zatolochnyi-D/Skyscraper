@@ -40,4 +40,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
             OnItemDepleted?.Invoke(index);
         return prefab;
     }
+
+    public bool IsDepleted(int index)
+    {
+        return items[index].amount == 0;
+    }
 }

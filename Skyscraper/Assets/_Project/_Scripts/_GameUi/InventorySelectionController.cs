@@ -60,17 +60,33 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     private void CycleSelection()
     {
-        SetSelection((currentSelection + 1) % PlayerInventory.Instance.ItemsCount);
+        int nextIndex;
+        int offset = 1;
+        do
+        {
+            nextIndex = (currentSelection + offset) % PlayerInventory.Instance.ItemsCount;
+            offset++;
+        } while (PlayerInventory.Instance.IsDepleted(nextIndex));
+        SetSelection(nextIndex);
     }
 
     private void SetSelection(int newSelection)
     {
-        textTransforms[currentSelection].sizeDelta = new(0f, 50f);
-        texts[currentSelection].fontSize = 36;
-
+        Select(currentSelection);
         currentSelection = newSelection;
-        textTransforms[currentSelection].sizeDelta = new(0f, 100f);
-        texts[currentSelection].fontSize = 72;
+        Deselect(currentSelection);
+    }
+
+    private void Select(int index)
+    {
+        textTransforms[index].sizeDelta = new(0f, 50f);
+        texts[index].fontSize = 36;
+    }
+
+    private void Deselect(int index)
+    {
+        textTransforms[index].sizeDelta = new(0f, 100f);
+        texts[index].fontSize = 72;
     }
 
     public int GetCurrentSelectedBlockId()
