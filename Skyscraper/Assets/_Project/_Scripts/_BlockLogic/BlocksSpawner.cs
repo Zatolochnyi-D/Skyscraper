@@ -11,6 +11,7 @@ public class BlocksSpawner : MonoBehaviour
     private void Awake()
     {
         EventBroker.Subscribe<BlockLandedEvent>(SpawnAfterInterval);
+        EventBroker.Subscribe<InventoryEmptyEvent>(DeactivateSpawner);
     }
 
     private void Start()
@@ -21,6 +22,7 @@ public class BlocksSpawner : MonoBehaviour
     private void OnDestroy()
     {
         EventBroker.Unsubscribe<BlockLandedEvent>(SpawnAfterInterval);
+        EventBroker.Unsubscribe<InventoryEmptyEvent>(DeactivateSpawner);
     }
 
     private void Spawn()
@@ -38,5 +40,12 @@ public class BlocksSpawner : MonoBehaviour
     private void SpawnAfterInterval()
     {
         this.InvokeOnce(Spawn, additionalSpawnInterval);
+    }
+
+    private void DeactivateSpawner()
+    {
+        Debug.Log("Inventory depleted. Waiting for game over confirmation.");
+        EventBroker.Unsubscribe<BlockLandedEvent>(SpawnAfterInterval);
+        StopAllCoroutines();
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThreeDent.DevelopmentTools;
+using ThreeDent.EventBroker;
 using UnityEngine;
 
 [Serializable]
@@ -21,6 +22,11 @@ public class PlayerInventory : Singleton<PlayerInventory>
     public int ItemsCount => items.Length;
     public IEnumerable<InventoryItem> Items => items.Select(x => x.item);
 
+    private bool CheckIfInventoryIsEmpty()
+    {
+        return items.Select(x => x.amount).Sum() == 0;
+    }
+
     public InventoryItem GetItem(int index)
     {
         return items[index].item;
@@ -36,6 +42,8 @@ public class PlayerInventory : Singleton<PlayerInventory>
         var prefab = items[index].item.blockPrefab;
         items[index].amount--;
         OnItemsCountUpdated?.Invoke(index);
+        if (CheckIfInventoryIsEmpty())
+            EventBroker.Invoke<InventoryEmptyEvent>();
         if (items[index].amount == 0)
             OnItemDepleted?.Invoke(index);
         return prefab;
@@ -46,3 +54,5 @@ public class PlayerInventory : Singleton<PlayerInventory>
         return items[index].amount == 0;
     }
 }
+
+public class InventoryEmptyEvent : IEvent { }

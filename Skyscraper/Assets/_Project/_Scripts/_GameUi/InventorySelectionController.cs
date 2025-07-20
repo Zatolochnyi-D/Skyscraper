@@ -1,11 +1,10 @@
-using System.Linq;
+using UnityEngine;
+using TMPro;
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools;
 using ThreeDent.DevelopmentTools.Attributes;
 using ThreeDent.DevelopmentTools.Option;
-using ThreeDent.Helpers.Extensions;
-using TMPro;
-using UnityEngine;
+using ThreeDent.EventBroker;
 
 public class InventorySelectionController : Singleton<InventorySelectionController>
 {
@@ -15,6 +14,8 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
     private TextMeshProUGUI[] texts;
     private int currentSelection = 0;
 
+    private bool working = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -22,12 +23,19 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         sampleText.SetActive(false);
 
         InputManager.OnCyclePressed += CycleSelection;
-        PlayerInventory.Instance.OnItemsCountUpdated += UpdateTextDisplay;
-        PlayerInventory.Instance.OnItemsCountUpdated += HandleDepletedItem;
+        EventBroker.Subscribe<InventoryEmptyEvent>(DeactivateController);
+    }
+
+    private void OnDestroy()
+    {
+        EventBroker.Unsubscribe<InventoryEmptyEvent>(DeactivateController);
     }
 
     private void Start()
     {
+        PlayerInventory.Instance.OnItemsCountUpdated += UpdateTextDisplay;
+        PlayerInventory.Instance.OnItemDepleted += HandleDepletedItem;
+
         var count = PlayerInventory.Instance.ItemsCount;
         textTransforms = new RectTransform[count];
         texts = new TextMeshProUGUI[count];
@@ -45,6 +53,12 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         SetSelection(0);
     }
 
+    private void DeactivateController()
+    {
+        working = false;
+        Deselect(currentSelection);
+    }
+
     private void UpdateTextDisplay(int index)
     {
         var name = PlayerInventory.Instance.GetItem(index).blockPrefab.name;
@@ -60,30 +74,34 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     private void CycleSelection()
     {
+        if (!working)
+            return;
         int nextIndex;
         int offset = 1;
         do
         {
             nextIndex = (currentSelection + offset) % PlayerInventory.Instance.ItemsCount;
             offset++;
+            if (offset > 100)
+                throw new System.Exception("Infinite loop");
         } while (PlayerInventory.Instance.IsDepleted(nextIndex));
         SetSelection(nextIndex);
     }
 
     private void SetSelection(int newSelection)
     {
-        Select(currentSelection);
-        currentSelection = newSelection;
         Deselect(currentSelection);
+        currentSelection = newSelection;
+        Select(currentSelection);
     }
 
-    private void Select(int index)
+    private void Deselect(int index)
     {
         textTransforms[index].sizeDelta = new(0f, 50f);
         texts[index].fontSize = 36;
     }
 
-    private void Deselect(int index)
+    private void Select(int index)
     {
         textTransforms[index].sizeDelta = new(0f, 100f);
         texts[index].fontSize = 72;
