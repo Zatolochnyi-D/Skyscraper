@@ -23,6 +23,7 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
         InputManager.OnCyclePressed += CycleSelection;
         PlayerInventory.Instance.OnItemsCountUpdated += UpdateTextDisplay;
+        PlayerInventory.Instance.OnItemsCountUpdated += HandleDepletedItem;
     }
 
     private void Start()
@@ -49,6 +50,12 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         var name = PlayerInventory.Instance.GetItem(index).blockPrefab.name;
         var amount = PlayerInventory.Instance.GetItemAmount(index);
         texts[index].text = $"{amount}x {name}";
+    }
+
+    private void HandleDepletedItem(int index)
+    {
+        texts[index].color = texts[index].color.WithHsv(v: 0.6f);
+        CycleSelection();
     }
 
     private void CycleSelection()

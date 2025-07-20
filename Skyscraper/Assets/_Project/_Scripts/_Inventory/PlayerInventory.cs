@@ -13,7 +13,7 @@ public struct ItemAmountPair
 
 public class PlayerInventory : Singleton<PlayerInventory>
 {
-    public event Action<InventoryItem> OnItemDepleted;
+    public event Action<int> OnItemDepleted;
     public event Action<int> OnItemsCountUpdated;
 
     [SerializeField] private ItemAmountPair[] items;
@@ -36,6 +36,8 @@ public class PlayerInventory : Singleton<PlayerInventory>
         var prefab = items[index].item.blockPrefab;
         items[index].amount--;
         OnItemsCountUpdated?.Invoke(index);
+        if (items[index].amount == 0)
+            OnItemDepleted?.Invoke(index);
         return prefab;
     }
 }
