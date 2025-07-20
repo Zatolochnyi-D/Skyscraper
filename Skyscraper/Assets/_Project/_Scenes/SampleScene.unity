@@ -2048,9 +2048,13 @@ MonoBehaviour:
   leftRaycaster: {fileID: 561206342}
   rightRaycaster: {fileID: 783143239}
   additionalDistanceFromSide: 15
-  floor: {fileID: 1438849566}
   leftLimiter: {fileID: 737722489}
   rightLimiter: {fileID: 1269527051}
+  floorSprite: {fileID: 1438849565}
+  skySprites:
+  - {fileID: 1913379430}
+  - {fileID: 648245189}
+  spaceSprite: {fileID: 257020453}
 --- !u!1 &1766534840
 GameObject:
   m_ObjectHideFlags: 0

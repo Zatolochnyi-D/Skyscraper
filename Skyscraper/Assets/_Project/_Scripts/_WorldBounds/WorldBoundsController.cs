@@ -20,9 +20,11 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private EdgeCollider2D leftRaycaster;
         [SerializeField] private EdgeCollider2D rightRaycaster;
         [SerializeField] private float additionalDistanceFromSide;
-        [SerializeField] private Transform floor;
         [SerializeField] private EdgeCollider2D leftLimiter;
         [SerializeField] private EdgeCollider2D rightLimiter;
+        [SerializeField] private SpriteRenderer floorSprite;
+        [SerializeField] private SpriteRenderer[] skySprites;
+        [SerializeField] private SpriteRenderer spaceSprite;
 
         public static float UpperBound => Instance.bounds.size.y - Instance.lowerBound.position.y;
         public static float LeftBound => -(Instance.bounds.size.x / 2f - Instance.bounds.offset.x);
@@ -78,8 +80,17 @@ namespace Skyscraper.WorldBounds
             rightRaycaster.points = points;
             rightRaycaster.transform.position = rightRaycaster.transform.position.With(x: newRightPoint + RaycasterGap);
 
-            floor.localScale = floor.localScale.With(x: newBoundsSize.x + RaycasterGap * 2f);
-            floor.position = floor.position.With(x: newBoundsOffset.x);
+            floorSprite.size = floorSprite.size.With(x: newBoundsSize.x + RaycasterGap * 2f);
+            floorSprite.transform.position = floorSprite.transform.position.With(x: newBoundsOffset.x);
+            var floorCollider = floorSprite.GetComponent<BoxCollider2D>();
+            floorCollider.size = floorCollider.size.With(x: floorSprite.size.x);
+            foreach (var sprite in skySprites)
+            {
+                sprite.size = sprite.size.With(x: newBoundsSize.x + RaycasterGap * 2f);
+                sprite.transform.position = sprite.transform.position.With(x: newBoundsOffset.x);
+            }
+            spaceSprite.size = new(newBoundsSize.x + RaycasterGap * 2f, Mathf.Max(0f, -5f + newBoundsSize.y - spaceSprite.transform.position.y));
+            spaceSprite.transform.position = spaceSprite.transform.position.With(x: newBoundsOffset.x);
 
             leftLimiter.transform.position = leftRaycaster.transform.position.With(x: newLeftPoint);
             points = leftLimiter.points;
