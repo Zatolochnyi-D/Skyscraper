@@ -25,7 +25,9 @@ public class BlocksSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        var newBlock = Instantiate(InventorySelectionController.Instance.GetCurrentSelectedBlock(), transform);
+        var blockId = InventorySelectionController.Instance.GetCurrentSelectedBlockId();
+        var prefab = PlayerInventory.Instance.GetPrefab(blockId);
+        var newBlock = Instantiate(prefab, transform);
         newBlock.GetComponent<BlockSilhouetteController>().Show();
         var distanceInSeconds = ActiveBlockManager.Instance.FallSpeed * timeToReachUpperBound;
         newBlock.transform.position = new(Camera.main.transform.position.x, WorldBoundsController.UpperBound + distanceInSeconds, 0f);

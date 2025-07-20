@@ -30,4 +30,12 @@ public class PlayerInventory : Singleton<PlayerInventory>
     {
         return items[index].amount;
     }
+
+    public GameObject GetPrefab(int index)
+    {
+        var prefab = items[index].item.blockPrefab;
+        items[index].amount--;
+        OnItemsCountUpdated?.Invoke(index);
+        return prefab;
+    }
 }

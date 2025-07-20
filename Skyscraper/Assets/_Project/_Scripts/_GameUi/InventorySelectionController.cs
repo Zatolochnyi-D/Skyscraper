@@ -2,6 +2,8 @@ using System.Linq;
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools;
 using ThreeDent.DevelopmentTools.Attributes;
+using ThreeDent.DevelopmentTools.Option;
+using ThreeDent.Helpers.Extensions;
 using TMPro;
 using UnityEngine;
 
@@ -16,10 +18,11 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
     protected override void Awake()
     {
         base.Awake();
-        
+
         sampleText.SetActive(false);
 
         InputManager.OnCyclePressed += CycleSelection;
+        PlayerInventory.Instance.OnItemsCountUpdated += UpdateTextDisplay;
     }
 
     private void Start()
@@ -41,6 +44,13 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         SetSelection(0);
     }
 
+    private void UpdateTextDisplay(int index)
+    {
+        var name = PlayerInventory.Instance.GetItem(index).blockPrefab.name;
+        var amount = PlayerInventory.Instance.GetItemAmount(index);
+        texts[index].text = $"{amount}x {name}";
+    }
+
     private void CycleSelection()
     {
         SetSelection((currentSelection + 1) % PlayerInventory.Instance.ItemsCount);
@@ -56,8 +66,8 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         texts[currentSelection].fontSize = 72;
     }
 
-    public GameObject GetCurrentSelectedBlock()
+    public int GetCurrentSelectedBlockId()
     {
-        return PlayerInventory.Instance.GetItem(currentSelection).blockPrefab;
+        return currentSelection;
     }
 }
