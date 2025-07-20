@@ -21,8 +21,13 @@ public class PlayerInventory : Singleton<PlayerInventory>
     public int ItemsCount => items.Length;
     public IEnumerable<InventoryItem> Items => items.Select(x => x.item);
 
-    public void GetItem(InventoryItem item)
+    public InventoryItem GetItem(int index)
     {
+        return items[index].item;
+    }
 
+    public int GetItemAmount(int index)
+    {
+        return items[index].amount;
     }
 }

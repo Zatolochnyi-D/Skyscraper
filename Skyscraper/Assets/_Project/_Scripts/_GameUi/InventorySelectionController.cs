@@ -9,7 +9,6 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 {
     [IsChild(1), SerializeField] private GameObject sampleText;
 
-    private InventoryItem[] items;
     private RectTransform[] textTransforms;
     private TextMeshProUGUI[] texts;
     private int currentSelection = 0;
@@ -25,15 +24,17 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     private void Start()
     {
-        items = PlayerInventory.Instance.Items.ToArray();
-        textTransforms = new RectTransform[items.Length];
-        texts = new TextMeshProUGUI[items.Length];
-        for (int i = 0; i < items.Length; i++)
+        var count = PlayerInventory.Instance.ItemsCount;
+        textTransforms = new RectTransform[count];
+        texts = new TextMeshProUGUI[count];
+        for (int i = 0; i < count; i++)
         {
             var newText = Instantiate(sampleText, sampleText.transform.parent);
             newText.SetActive(true);
             texts[i] = newText.GetComponent<TextMeshProUGUI>();
-            texts[i].text = items[i].blockPrefab.name;
+            var name = PlayerInventory.Instance.GetItem(i).blockPrefab.name;
+            var amount = PlayerInventory.Instance.GetItemAmount(i);
+            texts[i].text = $"{amount}x {name}";
             textTransforms[i] = newText.GetComponent<RectTransform>();
         }
 
@@ -42,7 +43,7 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     private void CycleSelection()
     {
-        SetSelection((currentSelection + 1) % items.Length);
+        SetSelection((currentSelection + 1) % PlayerInventory.Instance.ItemsCount);
     }
 
     private void SetSelection(int newSelection)
@@ -57,6 +58,6 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     public GameObject GetCurrentSelectedBlock()
     {
-        return items[currentSelection].blockPrefab;
+        return PlayerInventory.Instance.GetItem(currentSelection).blockPrefab;
     }
 }
