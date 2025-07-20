@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ThreeDent.DevelopmentTools;
 using UnityEngine;
 
@@ -11,5 +13,16 @@ public struct ItemAmountPair
 
 public class PlayerInventory : Singleton<PlayerInventory>
 {
+    public event Action<InventoryItem> OnItemDepleted;
+    public event Action<int> OnItemsCountUpdated;
+
     [SerializeField] private ItemAmountPair[] items;
+
+    public int ItemsCount => items.Length;
+    public IEnumerable<InventoryItem> Items => items.Select(x => x.item);
+
+    public void GetItem(InventoryItem item)
+    {
+
+    }
 }

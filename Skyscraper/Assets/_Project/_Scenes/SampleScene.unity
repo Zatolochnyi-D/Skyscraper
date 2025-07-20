@@ -6783,18 +6783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sampleText: {fileID: 1244174130}
-  blocks:
-  - {fileID: 7136289735530710788, guid: 0bf6c3b1b48e44d5cb40517ea6630a83, type: 3}
-  - {fileID: 7136289735530710788, guid: 82e7c6308218144b386c5a875458532f, type: 3}
-  - {fileID: 7136289735530710788, guid: 6da3652c0a2cc43d4b03ba2750ac09c7, type: 3}
-  - {fileID: 7136289735530710788, guid: 6550d3af86ec84301a9c374ea9c99b24, type: 3}
-  - {fileID: 7136289735530710788, guid: cc3b732724d8a4fe5b38142425436f4b, type: 3}
-  names:
-  - Plank
-  - Long Plank
-  - Box
-  - Trapeze
-  - Triangle
 --- !u!1 &1732559055
 GameObject:
   m_ObjectHideFlags: 0

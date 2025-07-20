@@ -15,7 +15,7 @@ public class BlocksSpawner : MonoBehaviour
 
     private void Start()
     {
-        Spawn();
+        this.InvokeOnce(Spawn, 1);
     }
 
     private void OnDestroy()

@@ -1,3 +1,4 @@
+using System.Linq;
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools;
 using ThreeDent.DevelopmentTools.Attributes;
@@ -7,9 +8,8 @@ using UnityEngine;
 public class InventorySelectionController : Singleton<InventorySelectionController>
 {
     [IsChild(1), SerializeField] private GameObject sampleText;
-    [SerializeField] private GameObject[] blocks;
-    [SerializeField] private string[] names;
 
+    private InventoryItem[] items;
     private RectTransform[] textTransforms;
     private TextMeshProUGUI[] texts;
     private int currentSelection = 0;
@@ -20,25 +20,29 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         
         sampleText.SetActive(false);
 
-        textTransforms = new RectTransform[blocks.Length];
-        texts = new TextMeshProUGUI[blocks.Length];
-        for (int i = 0; i < blocks.Length; i++)
+        InputManager.OnCyclePressed += CycleSelection;
+    }
+
+    private void Start()
+    {
+        items = PlayerInventory.Instance.Items.ToArray();
+        textTransforms = new RectTransform[items.Length];
+        texts = new TextMeshProUGUI[items.Length];
+        for (int i = 0; i < items.Length; i++)
         {
             var newText = Instantiate(sampleText, sampleText.transform.parent);
             newText.SetActive(true);
             texts[i] = newText.GetComponent<TextMeshProUGUI>();
-            texts[i].text = names[i];
+            texts[i].text = items[i].blockPrefab.name;
             textTransforms[i] = newText.GetComponent<RectTransform>();
         }
 
         SetSelection(0);
-
-        InputManager.OnCyclePressed += CycleSelection;
     }
 
     private void CycleSelection()
     {
-        SetSelection((currentSelection + 1) % blocks.Length);
+        SetSelection((currentSelection + 1) % items.Length);
     }
 
     private void SetSelection(int newSelection)
@@ -53,6 +57,6 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     public GameObject GetCurrentSelectedBlock()
     {
-        return blocks[currentSelection];
+        return items[currentSelection].blockPrefab;
     }
 }
