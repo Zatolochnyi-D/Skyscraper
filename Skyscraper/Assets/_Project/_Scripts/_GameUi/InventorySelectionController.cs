@@ -64,11 +64,14 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
         var name = PlayerInventory.Instance.GetItem(index).blockPrefab.name;
         var amount = PlayerInventory.Instance.GetItemAmount(index);
         texts[index].text = $"{amount}x {name}";
+        if (amount == 0)
+            texts[index].color = texts[index].color.WithHsv(v: 0.6f);
+        else
+            texts[index].color = texts[index].color.WithHsv(v: 1f);
     }
 
     private void HandleDepletedItem(int index)
     {
-        texts[index].color = texts[index].color.WithHsv(v: 0.6f);
         CycleSelection();
     }
 

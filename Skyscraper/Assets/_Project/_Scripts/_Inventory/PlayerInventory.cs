@@ -53,6 +53,12 @@ public class PlayerInventory : Singleton<PlayerInventory>
     {
         return items[index].amount == 0;
     }
+
+    public void AddItem(int index)
+    {
+        items[index].amount++;
+        OnItemsCountUpdated?.Invoke(index);
+    }
 }
 
 public class InventoryEmptyEvent : IEvent { }

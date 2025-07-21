@@ -2043,6 +2043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825a3af853bd24eca8d0a1f15f4e7561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heightToReach: 5
+  blocksToGive: 8
+  incementWithEachGoal: 0.3
 --- !u!4 &1530862728
 Transform:
   m_ObjectHideFlags: 0
