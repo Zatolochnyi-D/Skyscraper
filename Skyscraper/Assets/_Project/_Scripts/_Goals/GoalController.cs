@@ -42,9 +42,9 @@ public class GoalController : Singleton<GoalController>
         heighestPoint = args.heighestPoint;
         if (heighestPoint > heightToReach * (goalsReached + 1))
         {
-            goalsReached++;
             for (int i = 0; i < Mathf.Ceil(blocksToGive * (1 + incrementWithEachGoal * goalsReached)); i++)
                 PlayerInventory.Instance.AddItem(i % PlayerInventory.Instance.ItemsCount);
+            goalsReached++;
         }
         OnHeighestPointChange?.Invoke();
     }
