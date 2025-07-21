@@ -12,6 +12,8 @@ namespace Skyscraper.WorldBounds
         private const float RaycasterGap = 3f;
         private const float LimiterAdditionHeight = 200f;
 
+        private static NewHeighestPointFoundEvent newHeighestPointMessage = new();
+
         [OnThis, SerializeField] private BoxCollider2D bounds;
         [SerializeField] private CinemachineConfiner2D confiner;
         [SerializeField] private Transform lowerBound;
@@ -25,6 +27,7 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private SpriteRenderer floorSprite;
         [SerializeField] private SpriteRenderer[] skySprites;
         [SerializeField] private SpriteRenderer spaceSprite;
+        [SerializeField] private Transform zeroHeight;
 
         public static float UpperBound => Instance.bounds.size.y - Instance.lowerBound.position.y;
         public static float LeftBound => -(Instance.bounds.size.x / 2f - Instance.bounds.offset.x);
@@ -58,6 +61,9 @@ namespace Skyscraper.WorldBounds
             var newLeftPoint = Mathf.Min(leftestPoint - additionalDistanceFromSide, previousLeftPoint);
             var previousRightPoint = bounds.size.x / 2 + bounds.offset.x;
             var newRightPoint = Mathf.Max(rightestPoint + additionalDistanceFromSide, previousRightPoint);
+
+            newHeighestPointMessage.heighestPoint = heighestPoint - zeroHeight.position.y;
+            EventBroker.Invoke(newHeighestPointMessage);
 
             var newBoundsSize = new Vector2(newRightPoint - newLeftPoint, newHeight);
             var newBoundsOffset = new Vector2(newBoundsSize.x / 2 + newLeftPoint, newHeight / 2 + lowerBound.position.y);
@@ -105,3 +111,5 @@ namespace Skyscraper.WorldBounds
         }
     }
 }
+
+public class NewHeighestPointFoundEvent : IEvent { public float heighestPoint; }
