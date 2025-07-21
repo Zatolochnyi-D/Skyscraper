@@ -1,12 +1,18 @@
+using System;
+using ThreeDent.DevelopmentTools;
 using ThreeDent.EventBroker;
-using UnityEngine;
 
-public class GoalController : MonoBehaviour
+public class GoalController : Singleton<GoalController>
 {
+    public event Action OnHeighestPointChange;
+
     private float heighestPoint = 0f;
 
-    private void Awake()
+    public float HeighestPoint => (float)Math.Round(heighestPoint, 1);
+
+    protected override void Awake()
     {
+        base.Awake();
         EventBroker.Subscribe<NewHeighestPointFoundEvent>(HandleNewHeighestPoint);
     }
 
@@ -18,6 +24,6 @@ public class GoalController : MonoBehaviour
     private void HandleNewHeighestPoint(NewHeighestPointFoundEvent args)
     {
         heighestPoint = args.heighestPoint;
-        Debug.Log(heighestPoint);
+        OnHeighestPointChange?.Invoke();
     }
 }
