@@ -39,7 +39,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
 
     private void Start()
     {
-        this.InvokeOnce(Spawn, 1);
+        this.InvokeOnce(SpawnAfterInterval, 1);
     }
 
     private void OnDestroy()
