@@ -1,5 +1,6 @@
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools.Attributes;
+using ThreeDent.Helpers.Extensions;
 using UnityEngine;
 
 public class BlockMover : MonoBehaviour
@@ -82,7 +83,7 @@ public class BlockMover : MonoBehaviour
         InputManager.OnSpeedupStarted -= SpeedUpBlockFall;
         InputManager.OnSpeedupCanceled -= SlowDownBlockFall;
 
-        physicalBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
         physicalBody.gravityScale = previousGravityScale;
+        this.InvokeOnce(() => physicalBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete, 4f);
     }
 }
