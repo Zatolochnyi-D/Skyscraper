@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using ThreeDent.DevelopmentTools;
 using ThreeDent.EventBroker;
@@ -76,15 +77,13 @@ public class PointerController : Singleton<PointerController>
             var cameraUpperBoundY = Camera.main.transform.position.y + Camera.main.orthographicSize;
             var blockY = currentActiveBlock.position.y;
             var distanceToTravel = blockY - cameraUpperBoundY;
+            countdown.text = $"{Math.Round(distanceToTravel, 1)}m";
 
             if (distanceToTravel <= 0f)
             {
                 Deactivate();
                 break;
             }
-
-            var timeToReachUpperBound = distanceToTravel / ActiveBlockManager.Instance.ActiveBodyRigidbody.linearVelocity.magnitude;
-            countdown.text = Mathf.CeilToInt(timeToReachUpperBound).ToString();
 
             countdown.transform.position = countdownPivot.position;
 
