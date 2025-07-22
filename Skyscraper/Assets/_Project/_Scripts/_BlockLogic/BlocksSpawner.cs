@@ -1,17 +1,40 @@
+using System;
+using System.Collections;
+using Skyscraper.Inputs;
 using Skyscraper.WorldBounds;
+using ThreeDent.DevelopmentTools;
 using ThreeDent.EventBroker;
 using ThreeDent.Helpers.Extensions;
 using UnityEngine;
 
-public class BlocksSpawner : MonoBehaviour
+public class BlocksSpawner : Singleton<BlocksSpawner>
 {
+    public event Action OnCountdownStart;
+    public event Action<float> OnCountdown;
+    public event Action OnCountdownEnd;
+
     [SerializeField] private float spawnInterval = 8f;
     [SerializeField] private float timeToReachUpperBound = 4f;
 
-    private void Awake()
+    private bool isSpawning = false;
+
+    protected override void Awake()
     {
+        base.Awake();
         EventBroker.Subscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         EventBroker.Subscribe<InventoryEmptyEvent>(DeactivateSpawner);
+        InputManager.OnSpeedupStarted += SpeedUpSpawn;
+    }
+
+    private void SpeedUpSpawn()
+    {
+        if (isSpawning)
+        {
+            isSpawning = false;
+            StopAllCoroutines();
+            Spawn();
+            OnCountdownEnd?.Invoke();
+        }
     }
 
     private void Start()
@@ -39,7 +62,27 @@ public class BlocksSpawner : MonoBehaviour
 
     private void SpawnAfterInterval()
     {
-        this.InvokeOnce(Spawn, spawnInterval);
+        StartCoroutine(SpawnCycle());
+    }
+
+    private IEnumerator SpawnCycle()
+    {
+        isSpawning = true;
+        float elapsedTime = 0f;
+        OnCountdownStart?.Invoke();
+        while (true)
+        {
+            elapsedTime += Time.deltaTime;
+            OnCountdown?.Invoke(spawnInterval - elapsedTime);
+            if (elapsedTime >= spawnInterval)
+            {
+                Spawn();
+                isSpawning = false;
+                OnCountdownEnd?.Invoke();
+                break;
+            }
+            yield return null;
+        }
     }
 
     private void DeactivateSpawner()
