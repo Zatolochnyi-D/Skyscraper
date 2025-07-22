@@ -27,6 +27,7 @@ public class BlockLandingDetector : MonoBehaviour
             ActiveBlockManager.Instance.RemoveActiveBlock();
             StartCoroutine(MovementCheckCycle());
             OnBlockFirstCollision?.Invoke(collision);
+            EventBroker.Invoke<BlockFirstCollisionEvent>();
         }
     }
 
@@ -48,4 +49,5 @@ public class BlockLandingDetector : MonoBehaviour
     }
 }
 
+public class BlockFirstCollisionEvent : IEvent { }
 public class BlockLandedEvent : IEvent { }

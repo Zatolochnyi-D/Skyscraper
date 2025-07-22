@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class BlocksSpawner : MonoBehaviour
 {
-    [SerializeField] private float additionalSpawnInterval = 1f;
+    [SerializeField] private float spawnInterval = 8f;
     [SerializeField] private float timeToReachUpperBound = 4f;
 
     private void Awake()
     {
-        EventBroker.Subscribe<BlockLandedEvent>(SpawnAfterInterval);
+        EventBroker.Subscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         EventBroker.Subscribe<InventoryEmptyEvent>(DeactivateSpawner);
     }
 
@@ -21,7 +21,7 @@ public class BlocksSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventBroker.Unsubscribe<BlockLandedEvent>(SpawnAfterInterval);
+        EventBroker.Unsubscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         EventBroker.Unsubscribe<InventoryEmptyEvent>(DeactivateSpawner);
     }
 
@@ -39,13 +39,13 @@ public class BlocksSpawner : MonoBehaviour
 
     private void SpawnAfterInterval()
     {
-        this.InvokeOnce(Spawn, additionalSpawnInterval);
+        this.InvokeOnce(Spawn, spawnInterval);
     }
 
     private void DeactivateSpawner()
     {
         Debug.Log("Inventory depleted. Waiting for game over confirmation.");
-        EventBroker.Unsubscribe<BlockLandedEvent>(SpawnAfterInterval);
+        EventBroker.Unsubscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         StopAllCoroutines();
     }
 }
