@@ -1,10 +1,12 @@
 using ThreeDent.DevelopmentTools.Attributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CountdownDisplay : MonoBehaviour
 {
-    [OnChild, SerializeField] private TextMeshProUGUI display;
+    [OnChild, SerializeField] private Image imageDisplay;
+    [OnChild, SerializeField] private TextMeshProUGUI textDisplay;
 
     private void Awake()
     {
@@ -18,18 +20,21 @@ public class CountdownDisplay : MonoBehaviour
         BlocksSpawner.Instance.OnCountdownEnd += Hide;
     }
 
-    private void UpdateDisplay(float time)
+    private void UpdateDisplay(float time, float normalizedTime)
     {
-        display.text = $"{Mathf.Ceil(time)}";
+        imageDisplay.fillAmount = normalizedTime;
+        textDisplay.text = $"{Mathf.Ceil(time)}";
     }
 
     private void Show()
     {
-        display.gameObject.SetActive(true);
+        imageDisplay.gameObject.SetActive(true);
+        textDisplay.gameObject.SetActive(true);
     }
 
     private void Hide()
     {
-        display.gameObject.SetActive(false);
+        imageDisplay.gameObject.SetActive(false);
+        textDisplay.gameObject.SetActive(false);
     }
 }

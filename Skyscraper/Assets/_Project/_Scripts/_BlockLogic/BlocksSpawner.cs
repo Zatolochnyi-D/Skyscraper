@@ -10,7 +10,7 @@ using UnityEngine;
 public class BlocksSpawner : Singleton<BlocksSpawner>
 {
     public event Action OnCountdownStart;
-    public event Action<float> OnCountdown;
+    public event Action<float, float> OnCountdown;
     public event Action OnCountdownEnd;
 
     [SerializeField] private float spawnInterval = 8f;
@@ -73,7 +73,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
         while (true)
         {
             elapsedTime += Time.deltaTime;
-            OnCountdown?.Invoke(spawnInterval - elapsedTime);
+            OnCountdown?.Invoke(spawnInterval - elapsedTime, (spawnInterval - elapsedTime) / spawnInterval);
             if (elapsedTime >= spawnInterval)
             {
                 Spawn();
