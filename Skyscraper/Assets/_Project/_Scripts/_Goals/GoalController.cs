@@ -19,6 +19,7 @@ public class GoalController : Singleton<GoalController>
     private int goalsReached = 0;
 
     public float HeighestPoint => (float)Math.Round(heighestPoint, 1);
+    public float GoalPoint => (float)Math.Round(heightToReach * (goalsReached + 1), 1);
 
     protected override void Awake()
     {

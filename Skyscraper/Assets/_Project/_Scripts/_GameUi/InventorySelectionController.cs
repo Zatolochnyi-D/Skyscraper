@@ -8,7 +8,11 @@ using ThreeDent.EventBroker;
 
 public class InventorySelectionController : Singleton<InventorySelectionController>
 {
-    [IsChild(1), SerializeField] private GameObject sampleText;
+    [IsChild(2), SerializeField] private GameObject sampleText;
+    [SerializeField] private float unselectedFontSize = 44f;
+    [SerializeField] private float unselectedHeight = 45f;
+    [SerializeField] private float selectedFontSize = 72f;
+    [SerializeField] private float selectedHeight = 70f;
 
     private RectTransform[] textTransforms;
     private TextMeshProUGUI[] texts;
@@ -100,14 +104,14 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
     private void Deselect(int index)
     {
-        textTransforms[index].sizeDelta = new(0f, 50f);
-        texts[index].fontSize = 36;
+        textTransforms[index].sizeDelta = new(0f, unselectedHeight);
+        texts[index].fontSize = unselectedFontSize;
     }
 
     private void Select(int index)
     {
-        textTransforms[index].sizeDelta = new(0f, 100f);
-        texts[index].fontSize = 72;
+        textTransforms[index].sizeDelta = new(0f, selectedHeight);
+        texts[index].fontSize = selectedFontSize;
     }
 
     public int GetCurrentSelectedBlockId()
