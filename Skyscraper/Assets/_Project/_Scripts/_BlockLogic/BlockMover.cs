@@ -7,6 +7,7 @@ public class BlockMover : MonoBehaviour
 {
     [OnThis, SerializeField] private Rigidbody2D physicalBody;
     [OnThis, SerializeField] private BlockLandingDetector landingDetector;
+    [SerializeField] private float movementPerSecond = 2f;
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float speedUpMultiplication = 2f;
     [SerializeField] private float massOnLand = 20f;
@@ -29,7 +30,7 @@ public class BlockMover : MonoBehaviour
 
     private void MoveContinuous(Vector2 step)
     {
-        physicalBody.position += step;
+        physicalBody.position += step * movementPerSecond;
     }
 
     private void RotateContinuous(float angle)

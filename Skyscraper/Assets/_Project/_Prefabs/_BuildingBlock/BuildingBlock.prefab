@@ -113,7 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalBody: {fileID: 1961812567690002883}
   landingDetector: {fileID: -7272220728812228917}
-  rotationPerSecond: 180
+  movementPerSecond: 1.5
+  rotationPerSecond: 240
   speedUpMultiplication: 3
   massOnLand: 20
 --- !u!114 &-153453037341546784

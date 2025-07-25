@@ -11,6 +11,8 @@ namespace Skyscraper.Inputs
 
     public class InputManager : Singleton<InputManager>
     {
+        [SerializeField] private AnimationCurve acceleration;
+
         public static event Action<Vector2> OnCameraMovement;
         public static event Action<float> OnMovement;
         public static event Action<float> OnRotation;
@@ -22,6 +24,8 @@ namespace Skyscraper.Inputs
         [SerializeField] private MouseOnEdgeDetector onEdgeDetector;
 
         private Inputs inputActions;
+        private float moveHoldTime = 0f;
+        private float rotationHoldTime = 0f;
 
         protected override void Awake()
         {
@@ -38,11 +42,25 @@ namespace Skyscraper.Inputs
 
             var movementValue = inputActions.Game.Movement.ReadValue<float>();
             if (movementValue != 0f)
-                OnMovement?.Invoke(movementValue);
+            {
+                moveHoldTime += Time.deltaTime;
+                OnMovement?.Invoke(movementValue * acceleration.Evaluate(moveHoldTime));
+            }
+            else
+            {
+                moveHoldTime = 0f;
+            }
 
             var rotationValue = inputActions.Game.Rotation.ReadValue<float>();
             if (rotationValue != 0f)
-                OnRotation?.Invoke(rotationValue);
+            {
+                rotationHoldTime += Time.deltaTime;
+                OnRotation?.Invoke(rotationValue * acceleration.Evaluate(rotationHoldTime));
+            }
+            else
+            {
+                rotationHoldTime = 0f;
+            }
 
             var scrollValue = inputActions.Game.Scroll.ReadValue<float>();
             if (scrollValue != 0)
