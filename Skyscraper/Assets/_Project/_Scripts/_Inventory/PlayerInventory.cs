@@ -56,9 +56,12 @@ public class PlayerInventory : Singleton<PlayerInventory>
 
     public void AddItem(int index)
     {
+        if (CheckIfInventoryIsEmpty())
+            EventBroker.Invoke<InventoryResuppliedEvent>();
         items[index].amount++;
         OnItemsCountUpdated?.Invoke(index);
     }
 }
 
 public class InventoryEmptyEvent : IEvent { }
+public class InventoryResuppliedEvent : IEvent { }

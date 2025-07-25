@@ -16,6 +16,17 @@ public class BlockLandingDetector : MonoBehaviour
     [SerializeField] private LayerMask ignoreCollisionLayer;
 
     private bool firstCollisionHappened;
+    private Coroutine checkLandCoroutine;
+
+    private void Awake()
+    {
+        EventBroker.Subscribe<ForceBlockSpawnEvent>(DisableCheck);
+    }
+
+    private void OnDestroy()
+    {
+        EventBroker.Unsubscribe<ForceBlockSpawnEvent>(DisableCheck);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -25,10 +36,16 @@ public class BlockLandingDetector : MonoBehaviour
             firstCollisionHappened = true;
             silhouetteController.Hide();
             ActiveBlockManager.Instance.RemoveActiveBlock();
-            StartCoroutine(MovementCheckCycle());
+            checkLandCoroutine = StartCoroutine(MovementCheckCycle());
             OnBlockFirstCollision?.Invoke(collision);
             EventBroker.Invoke<BlockFirstCollisionEvent>();
         }
+    }
+
+    private void DisableCheck()
+    {
+        if (checkLandCoroutine != null)
+            StopCoroutine(checkLandCoroutine);
     }
 
     private IEnumerator MovementCheckCycle()

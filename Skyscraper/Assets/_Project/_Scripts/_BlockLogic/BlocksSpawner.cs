@@ -23,6 +23,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
         base.Awake();
         EventBroker.Subscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         EventBroker.Subscribe<InventoryEmptyEvent>(DeactivateSpawner);
+        EventBroker.Subscribe<InventoryResuppliedEvent>(ReactivateSpawner);
         InputManager.OnSpeedupStarted += SpeedUpSpawn;
     }
 
@@ -34,6 +35,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
             StopAllCoroutines();
             Spawn();
             OnCountdownEnd?.Invoke();
+            EventBroker.Invoke<ForceBlockSpawnEvent>();
         }
     }
 
@@ -46,6 +48,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
     {
         EventBroker.Unsubscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         EventBroker.Unsubscribe<InventoryEmptyEvent>(DeactivateSpawner);
+        EventBroker.Unsubscribe<InventoryResuppliedEvent>(ReactivateSpawner);
     }
 
     private void Spawn()
@@ -91,4 +94,13 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
         EventBroker.Unsubscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         StopAllCoroutines();
     }
+
+    private void ReactivateSpawner()
+    {
+        Debug.Log("Inventory was resupplied.");
+        EventBroker.Subscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
+        SpawnAfterInterval();
+    }
 }
+
+public class ForceBlockSpawnEvent : IEvent { }

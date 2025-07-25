@@ -28,11 +28,13 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
 
         InputManager.OnCyclePressed += CycleSelection;
         EventBroker.Subscribe<InventoryEmptyEvent>(DeactivateController);
+        EventBroker.Subscribe<InventoryResuppliedEvent>(ReactivateController);
     }
 
     private void OnDestroy()
     {
         EventBroker.Unsubscribe<InventoryEmptyEvent>(DeactivateController);
+        EventBroker.Unsubscribe<InventoryResuppliedEvent>(ReactivateController);
     }
 
     private void Start()
@@ -61,6 +63,12 @@ public class InventorySelectionController : Singleton<InventorySelectionControll
     {
         working = false;
         Deselect(currentSelection);
+    }
+
+    private void ReactivateController()
+    {
+        working = true;
+        SetSelection(0);
     }
 
     private void UpdateTextDisplay(int index)
