@@ -7,6 +7,7 @@ namespace Skyscraper.Inputs
     public enum InputModes
     {
         Game,
+        Menu,
     }
 
     public class InputManager : Singleton<InputManager>
@@ -20,6 +21,8 @@ namespace Skyscraper.Inputs
         public static event Action OnSpeedupStarted;
         public static event Action OnSpeedupCanceled;
         public static event Action OnCyclePressed;
+        public static event Action OnPausePerformed;
+        public static event Action OnMenuBackPerformed;
 
         [SerializeField] private MouseOnEdgeDetector onEdgeDetector;
 
@@ -69,6 +72,9 @@ namespace Skyscraper.Inputs
             inputActions.Game.SpeedupFall.started += (_) => OnSpeedupStarted?.Invoke();
             inputActions.Game.SpeedupFall.canceled += (_) => OnSpeedupCanceled?.Invoke();
             inputActions.Game.CycleSelection.performed += (_) => OnCyclePressed?.Invoke();
+            inputActions.Game.Pause.performed += (_) => OnPausePerformed?.Invoke();
+
+            inputActions.Menu.Back.performed += (_) => OnMenuBackPerformed?.Invoke();
         }
 
         public static void SwitchMode(InputModes mode)
@@ -78,6 +84,10 @@ namespace Skyscraper.Inputs
                 case InputModes.Game:
                     Instance.inputActions.Disable();
                     Instance.inputActions.Game.Enable();
+                    break;
+                case InputModes.Menu:
+                    Instance.inputActions.Disable();
+                    Instance.inputActions.Menu.Enable();
                     break;
             }
         }
