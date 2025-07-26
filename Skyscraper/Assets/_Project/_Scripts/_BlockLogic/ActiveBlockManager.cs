@@ -27,6 +27,8 @@ public class ActiveBlockManager : Singleton<ActiveBlockManager>
 
     public void RemoveActiveBlock()
     {
+        if (activeBlock == null)
+            return;
         activeBlock = null;
 
         activeBlockMover.Deactivate();

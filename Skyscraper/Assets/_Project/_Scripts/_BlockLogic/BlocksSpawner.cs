@@ -32,6 +32,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
         if (isSpawning)
         {
             isSpawning = false;
+            ActiveBlockManager.Instance.RemoveActiveBlock();
             StopAllCoroutines();
             Spawn();
             OnCountdownEnd?.Invoke();

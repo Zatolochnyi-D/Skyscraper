@@ -1,7 +1,9 @@
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools.Attributes;
+using ThreeDent.EventBroker;
 using ThreeDent.Helpers.Extensions;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BlockMover : MonoBehaviour
 {
@@ -21,10 +23,18 @@ public class BlockMover : MonoBehaviour
     private void Awake()
     {
         landingDetector.OnBlockLanded += SetMass;
+        EventBroker.Subscribe<ForceBlockSpawnEvent>(SetMass);
+    }
+
+    private void OnDestroy()
+    {
+        EventBroker.Unsubscribe<ForceBlockSpawnEvent>(SetMass);
     }
 
     private void SetMass()
     {
+        if (ActiveBlockManager.Instance.ActiveBlock == gameObject)
+            return;
         physicalBody.mass = massOnLand;
     }
 
