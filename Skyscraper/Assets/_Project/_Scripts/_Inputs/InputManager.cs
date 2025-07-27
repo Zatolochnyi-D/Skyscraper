@@ -8,6 +8,7 @@ namespace Skyscraper.Inputs
     {
         Game,
         Menu,
+        None,
     }
 
     public class InputManager : Singleton<InputManager>
@@ -88,6 +89,9 @@ namespace Skyscraper.Inputs
                 case InputModes.Menu:
                     Instance.inputActions.Disable();
                     Instance.inputActions.Menu.Enable();
+                    break;
+                case InputModes.None:
+                    Instance.inputActions.Disable();
                     break;
             }
         }
