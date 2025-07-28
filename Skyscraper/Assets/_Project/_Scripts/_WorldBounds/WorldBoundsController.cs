@@ -28,6 +28,7 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private SpriteRenderer[] skySprites;
         [SerializeField] private SpriteRenderer spaceSprite;
         [SerializeField] private Transform zeroHeight;
+        [SerializeField] private BoxCollider2D wind;
 
         public static float UpperBound => Instance.bounds.size.y - Instance.lowerBound.position.y;
         public static float LeftBound => -(Instance.bounds.size.x / 2f - Instance.bounds.offset.x);
@@ -106,6 +107,9 @@ namespace Skyscraper.WorldBounds
             points = rightLimiter.points;
             points[1] = points[1].With(y: newUpperPoint + LimiterAdditionHeight);
             rightLimiter.points = points;
+
+            wind.size = new(newRightPoint - newLeftPoint, newUpperPoint + LimiterAdditionHeight);
+            wind.offset = newBoundsOffset.With(y: wind.size.y / 2f);
 
             confiner.InvalidateBoundingShapeCache();
         }
