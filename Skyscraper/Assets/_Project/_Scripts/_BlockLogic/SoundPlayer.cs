@@ -56,7 +56,7 @@ public class SoundPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.otherCollider.gameObject.layer != ignoreCollisionLayers)
+        if (collision.collider.gameObject.layer.NotIn(ignoreCollisionLayers))
             GlobalSoundPlayer.Instance.RegisterCollision(collision);
     }
 }

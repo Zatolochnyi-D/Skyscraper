@@ -3,6 +3,7 @@ using ThreeDent.EventBroker;
 using System.Collections;
 using System;
 using ThreeDent.DevelopmentTools.Attributes;
+using ThreeDent.DevelopmentTools.Option;
 
 public class BlockLandingDetector : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class BlockLandingDetector : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!firstCollisionHappened && collision.otherCollider.gameObject.layer != ignoreCollisionLayer)
+        if (!firstCollisionHappened && collision.collider.gameObject.layer.NotIn(ignoreCollisionLayer))
         {
             // Should initiate object movement check to ensure it actually landed and not just accidentaly touched other object.
             firstCollisionHappened = true;
