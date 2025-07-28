@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -8921419403444003612}
   - component: {fileID: 7049306214855517135}
   - component: {fileID: -153453037341546784}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BuildingBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +117,7 @@ MonoBehaviour:
   rotationPerSecond: 240
   speedUpMultiplication: 3
   massOnLand: 20
+  layerAfterLand: 8
 --- !u!114 &-153453037341546784
 MonoBehaviour:
   m_ObjectHideFlags: 0

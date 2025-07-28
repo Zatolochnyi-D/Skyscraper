@@ -3150,7 +3150,7 @@ AreaEffector2D:
     m_Bits: 256
   m_UseGlobalAngle: 0
   m_ForceAngle: 180
-  m_ForceMagnitude: 10
+  m_ForceMagnitude: 7
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 0
@@ -10668,15 +10668,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - item: {fileID: 11400000, guid: 4c0382e17185e4d36b62bd3cee495c6b, type: 2}
-    amount: 1
+    amount: 2
   - item: {fileID: 11400000, guid: 61eaf0aa02bbe4d5993a6146bcddb3de, type: 2}
-    amount: 1
+    amount: 2
   - item: {fileID: 11400000, guid: 4af028ba7d8ef4b72982d0bd102e5dc1, type: 2}
-    amount: 1
+    amount: 10
   - item: {fileID: 11400000, guid: ef7e3b7d283f045c0ac3a108a2c38903, type: 2}
-    amount: 1
+    amount: 2
   - item: {fileID: 11400000, guid: a14e65a8679d743e8964c08b2e296327, type: 2}
-    amount: 1
+    amount: 2
 --- !u!4 &1922430803
 Transform:
   m_ObjectHideFlags: 0

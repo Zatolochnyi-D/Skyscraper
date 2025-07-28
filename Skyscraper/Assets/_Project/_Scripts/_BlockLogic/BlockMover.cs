@@ -13,6 +13,7 @@ public class BlockMover : MonoBehaviour
     [SerializeField] private float rotationPerSecond = 180f;
     [SerializeField] private float speedUpMultiplication = 2f;
     [SerializeField] private float massOnLand = 20f;
+    [SerializeField] private int layerAfterLand;
 
     private float previousGravityScale;
     private Vector2 previousFallSpeed;
@@ -36,6 +37,7 @@ public class BlockMover : MonoBehaviour
         if (ActiveBlockManager.Instance.ActiveBlock == gameObject)
             return;
         physicalBody.mass = massOnLand;
+        gameObject.layer = layerAfterLand;
     }
 
     private void MoveContinuous(Vector2 step)
