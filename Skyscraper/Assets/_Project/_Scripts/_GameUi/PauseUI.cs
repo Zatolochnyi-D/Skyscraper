@@ -1,6 +1,9 @@
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools.Attributes;
+using ThreeDent.SceneManagement;
+using ThreeDent.SceneManagement.Operations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
@@ -15,6 +18,10 @@ public class PauseUI : MonoBehaviour
 
         pause.onClick.AddListener(Pause);
         resume.onClick.AddListener(Unpause);
+        toMainMenu.onClick.AddListener(() =>
+        {
+            ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new JumpWaitOperation(1f), new LoadOperation(2), new UnloadOperation(3));
+        });
 
         InputManager.OnPausePerformed += Pause;
         InputManager.OnMenuBackPerformed += Unpause;

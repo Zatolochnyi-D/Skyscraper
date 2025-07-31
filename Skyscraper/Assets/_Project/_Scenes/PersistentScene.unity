@@ -1437,6 +1437,8 @@ MonoBehaviour:
   persistentScene: {fileID: 102900000, guid: e685dc65382d440bcbe2b18067c165f5, type: 3}
   otherScenes:
   - {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+  - {fileID: 102900000, guid: be6b646bb88a74f179a67fddb52c74f1, type: 3}
+  - {fileID: 102900000, guid: c08c45c0a65f44528be57f6cc0725fa5, type: 3}
 --- !u!1 &2014405922
 GameObject:
   m_ObjectHideFlags: 0
