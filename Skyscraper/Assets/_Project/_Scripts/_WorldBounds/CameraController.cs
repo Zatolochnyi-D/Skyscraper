@@ -20,6 +20,12 @@ namespace Skyscraper.WorldBounds
             InputManager.OnScroll += Zoom;
         }
 
+        private void OnDestroy()
+        {
+            InputManager.OnCameraMovement -= Move;
+            InputManager.OnScroll -= Zoom;
+        }
+
         private void Move(Vector2 direction)
         {
             var movementSpeed = minimalMovementSpeed * (1f + zoomSpeedInfluence * (sceneCamera.Lens.OrthographicSize - minZoom));
