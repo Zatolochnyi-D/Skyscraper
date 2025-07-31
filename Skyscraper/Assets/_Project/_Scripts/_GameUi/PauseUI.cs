@@ -3,7 +3,6 @@ using ThreeDent.DevelopmentTools.Attributes;
 using ThreeDent.SceneManagement;
 using ThreeDent.SceneManagement.Operations;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
