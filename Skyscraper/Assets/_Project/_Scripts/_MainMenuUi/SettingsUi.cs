@@ -1,16 +1,30 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsUi : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Button back;
+    [SerializeField] private Slider soundSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private MainMenuUi mainMenu;
+
+    private void Awake()
     {
-        
+        Hide();
+        back.onClick.AddListener(() =>
+        {
+            Hide();
+            mainMenu.Show();
+        });
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Show()
     {
-        
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
