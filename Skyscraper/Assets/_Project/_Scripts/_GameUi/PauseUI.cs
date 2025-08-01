@@ -28,6 +28,11 @@ public class PauseUI : MonoBehaviour
         {
             VolumeController.Instance.SoundVolume = value;
         });
+        musicSlider.value = VolumeController.Instance.MusicVolume;
+        musicSlider.onValueChanged.AddListener(value =>
+        {
+            VolumeController.Instance.MusicVolume = value;
+        });
 
         InputManager.OnPausePerformed += Pause;
         InputManager.OnMenuBackPerformed += Unpause;
