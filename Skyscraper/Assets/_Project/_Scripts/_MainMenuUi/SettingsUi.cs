@@ -16,6 +16,16 @@ public class SettingsUi : MonoBehaviour
             Hide();
             mainMenu.Show();
         });
+        soundSlider.value = VolumeController.Instance.SoundVolume;
+        soundSlider.onValueChanged.AddListener(value =>
+        {
+            VolumeController.Instance.SoundVolume = value;
+        });
+        musicSlider.value = VolumeController.Instance.MusicVolume;
+        musicSlider.onValueChanged.AddListener(value =>
+        {
+            VolumeController.Instance.MusicVolume = value;
+        });
     }
 
     public void Show()
