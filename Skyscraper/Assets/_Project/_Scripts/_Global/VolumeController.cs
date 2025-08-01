@@ -28,9 +28,10 @@ public class VolumeController : Singleton<VolumeController>
             mixer.SetFloat("MusicVolume", AudioUtils.NormalizedVolumeToAttenuation(value));
         }
     }
-
-    protected override void Awake()
+    
+    private void Start()
     {
+
         mixer.SetFloat("SoundVolume", AudioUtils.NormalizedVolumeToAttenuation(SoundVolume));
         mixer.SetFloat("MusicVolume", AudioUtils.NormalizedVolumeToAttenuation(MusicVolume));
     }
