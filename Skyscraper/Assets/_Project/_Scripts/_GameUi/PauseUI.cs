@@ -10,6 +10,8 @@ public class PauseUI : MonoBehaviour
     [OnChild, SerializeField] private Button resume;
     [OnChild(1), SerializeField] private Button toMainMenu;
     [SerializeField] private Button pause;
+    [SerializeField] private Slider soundSlider;
+    [SerializeField] private Slider musicSlider;
 
     private void Awake()
     {
@@ -20,6 +22,11 @@ public class PauseUI : MonoBehaviour
         toMainMenu.onClick.AddListener(() =>
         {
             ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new JumpWaitOperation(1f), new LoadOperation(2), new UnloadOperation(3));
+        });
+        soundSlider.value = VolumeController.Instance.SoundVolume;
+        soundSlider.onValueChanged.AddListener(value =>
+        {
+            VolumeController.Instance.SoundVolume = value;
         });
 
         InputManager.OnPausePerformed += Pause;
