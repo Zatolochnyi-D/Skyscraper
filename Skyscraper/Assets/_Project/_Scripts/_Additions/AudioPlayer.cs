@@ -1,5 +1,6 @@
 using UnityEngine;
 using ThreeDent.Helpers.Extensions;
+using UnityEngine.Audio;
 
 namespace ThreeDent.DevelopmentTools.Option
 {
@@ -7,6 +8,8 @@ namespace ThreeDent.DevelopmentTools.Option
     {
         [SerializeField] private GameObject globalSource;
         [SerializeField] private GameObject distantSource2d;
+        [SerializeField] private AudioMixerGroup soundGroup;
+        [SerializeField] private AudioMixerGroup musicGroup;
 
         private GameObjectPool globalSourcePool;
         private GameObjectPool distantSource2dPool;
@@ -40,6 +43,7 @@ namespace ThreeDent.DevelopmentTools.Option
             sourceScript.clip = audio;
             sourceScript.volume = localVolume;
             sourceScript.maxDistance = maxDistance;
+            sourceScript.outputAudioMixerGroup = soundGroup;
             sourceScript.Play();
             this.InvokeOnce(() => sourceObject.SetActive(false), audio.length);
         }

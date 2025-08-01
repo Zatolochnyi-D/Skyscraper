@@ -854,6 +854,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalSource: {fileID: 1364272557}
   distantSource2d: {fileID: 1595685051}
+  soundGroup: {fileID: -1698519091633348430, guid: 701d9ea557b174baea59f995d4eb6dc4, type: 2}
+  musicGroup: {fileID: -5066542870807942273, guid: 701d9ea557b174baea59f995d4eb6dc4, type: 2}
 --- !u!4 &964752369
 Transform:
   m_ObjectHideFlags: 0
