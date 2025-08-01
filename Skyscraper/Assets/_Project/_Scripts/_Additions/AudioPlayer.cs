@@ -26,10 +26,11 @@ namespace ThreeDent.DevelopmentTools.Option
         {
             var sourceObject = globalSourcePool.Get();
             sourceObject.SetActive(true);
-            var sourceScript = sourceObject.GetComponent<AudioSource>();
-            sourceScript.clip = audio;
-            sourceScript.volume = localVolume;
-            sourceScript.Play();
+            var sourceComponent = sourceObject.GetComponent<AudioSource>();
+            sourceComponent.clip = audio;
+            sourceComponent.volume = localVolume;
+            sourceComponent.outputAudioMixerGroup = soundGroup;
+            sourceComponent.Play();
             this.InvokeOnce(() => sourceObject.SetActive(false), audio.length);
         }
 
@@ -39,12 +40,12 @@ namespace ThreeDent.DevelopmentTools.Option
             var sourceObject = distantSource2dPool.Get();
             sourceObject.SetActive(true);
             sourceObject.transform.position = ((Vector3)position).With(z: camera.DefaultWith(Camera.main).transform.position.z);
-            var sourceScript = sourceObject.GetComponent<AudioSource>();
-            sourceScript.clip = audio;
-            sourceScript.volume = localVolume;
-            sourceScript.maxDistance = maxDistance;
-            sourceScript.outputAudioMixerGroup = soundGroup;
-            sourceScript.Play();
+            var sourceComponent = sourceObject.GetComponent<AudioSource>();
+            sourceComponent.clip = audio;
+            sourceComponent.volume = localVolume;
+            sourceComponent.maxDistance = maxDistance;
+            sourceComponent.outputAudioMixerGroup = soundGroup;
+            sourceComponent.Play();
             this.InvokeOnce(() => sourceObject.SetActive(false), audio.length);
         }
 
