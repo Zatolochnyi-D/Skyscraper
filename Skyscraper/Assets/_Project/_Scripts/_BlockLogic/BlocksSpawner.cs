@@ -32,11 +32,11 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
         if (isSpawning)
         {
             isSpawning = false;
+            EventBroker.Invoke<ForceBlockSpawnEvent>();
             ActiveBlockManager.Instance.RemoveActiveBlock();
             StopAllCoroutines();
             Spawn();
             OnCountdownEnd?.Invoke();
-            EventBroker.Invoke<ForceBlockSpawnEvent>();
         }
     }
 

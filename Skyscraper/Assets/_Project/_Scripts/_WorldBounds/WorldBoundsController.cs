@@ -29,6 +29,7 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private SpriteRenderer spaceSprite;
         [SerializeField] private Transform zeroHeight;
         [SerializeField] private BoxCollider2D wind;
+        [SerializeField] private LayerMask detectableLayers;
 
         public static float UpperBound => Instance.bounds.size.y - Instance.lowerBound.position.y;
         public static float LeftBound => -(Instance.bounds.size.x / 2f - Instance.bounds.offset.x);
@@ -39,21 +40,24 @@ namespace Skyscraper.WorldBounds
         {
             base.Awake();
             EventBroker.Subscribe<BlockLandedEvent>(RecalculateBounds);
+            // EventBroker.Subscribe<ForceBlockSpawnEvent>(RecalculateBounds);
         }
 
         private void OnDestroy()
         {
             EventBroker.Unsubscribe<BlockLandedEvent>(RecalculateBounds);
+            // EventBroker.Unsubscribe<ForceBlockSpawnEvent>(RecalculateBounds);
         }
 
         private void RecalculateBounds()
         {
+            var filter = new ContactFilter2D() { layerMask = detectableLayers };
             var raycastResults = new RaycastHit2D[1];
-            topRaycaster.Cast(Vector2.down, raycastResults);
+            topRaycaster.Cast(Vector2.down, filter, raycastResults);
             var heighestPoint = raycastResults[0].point.y;
-            leftRaycaster.Cast(Vector2.right, raycastResults);
+            leftRaycaster.Cast(Vector2.right, filter, raycastResults);
             var leftestPoint = raycastResults[0].point.x;
-            rightRaycaster.Cast(Vector2.left, raycastResults);
+            rightRaycaster.Cast(Vector2.left, filter, raycastResults);
             var rightestPoint = raycastResults[0].point.x;
 
             var newUpperPoint = heighestPoint + additionalHeight;

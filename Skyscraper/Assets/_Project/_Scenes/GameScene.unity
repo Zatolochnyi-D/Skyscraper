@@ -10814,6 +10814,9 @@ MonoBehaviour:
   spaceSprite: {fileID: 257020453}
   zeroHeight: {fileID: 959973247}
   wind: {fileID: 1118150460}
+  detectableLayers:
+    serializedVersion: 2
+    m_Bits: 320
 --- !u!1 &1751718949
 GameObject:
   m_ObjectHideFlags: 0

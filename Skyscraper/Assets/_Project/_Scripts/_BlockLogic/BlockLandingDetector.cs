@@ -47,6 +47,7 @@ public class BlockLandingDetector : MonoBehaviour
     {
         if (checkLandCoroutine != null)
             StopCoroutine(checkLandCoroutine);
+        TriggerBlockLand();
     }
 
     private IEnumerator MovementCheckCycle()
@@ -62,6 +63,11 @@ public class BlockLandingDetector : MonoBehaviour
             if (timeElapsed >= timeToStandNotMoved)
                 break;
         }
+        TriggerBlockLand();
+    }
+
+    private void TriggerBlockLand()
+    {   
         OnBlockLanded?.Invoke();
         EventBroker.Invoke<BlockLandedEvent>();
     }
