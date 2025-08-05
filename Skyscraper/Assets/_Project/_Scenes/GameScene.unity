@@ -1866,7 +1866,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5293,8 +5293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightToReach: 5
-  blocksToGive: 8
-  incrementWithEachGoal: 0.3
+  blocksToGive: 10
+  incrementWithEachGoal: 0.5
   dash: {fileID: 1609421397}
   zeroHeight: {fileID: 959973247}
 --- !u!4 &1530862728
@@ -11734,15 +11734,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - item: {fileID: 11400000, guid: 4c0382e17185e4d36b62bd3cee495c6b, type: 2}
-    amount: 2
+    amount: 8
   - item: {fileID: 11400000, guid: 61eaf0aa02bbe4d5993a6146bcddb3de, type: 2}
-    amount: 2
+    amount: 8
   - item: {fileID: 11400000, guid: 4af028ba7d8ef4b72982d0bd102e5dc1, type: 2}
-    amount: 10
+    amount: 8
   - item: {fileID: 11400000, guid: ef7e3b7d283f045c0ac3a108a2c38903, type: 2}
-    amount: 2
+    amount: 4
   - item: {fileID: 11400000, guid: a14e65a8679d743e8964c08b2e296327, type: 2}
-    amount: 2
+    amount: 4
 --- !u!4 &1922430803
 Transform:
   m_ObjectHideFlags: 0
