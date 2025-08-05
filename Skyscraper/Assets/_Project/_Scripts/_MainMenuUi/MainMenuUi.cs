@@ -14,7 +14,7 @@ public class MainMenuUi : MonoBehaviour
     {
         startButton.onClick.AddListener(() =>
         {
-            ScenesManager.LoadSequenceAsync(new LoadOperation(3), new UnloadOperation(2), new JumpWaitOperation(1f), new LoadOperation(1), new UnloadOperation(3));
+            ScenesManager.LoadSequenceAsync(new LoadOperation(3), new UnloadOperation(2), new LoadOperation(1), new UnloadOperation(3));
         });
         settingsButton.onClick.AddListener(() =>
         {

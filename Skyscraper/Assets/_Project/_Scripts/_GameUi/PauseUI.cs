@@ -21,7 +21,7 @@ public class PauseUI : MonoBehaviour
         resume.onClick.AddListener(Unpause);
         toMainMenu.onClick.AddListener(() =>
         {
-            ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new JumpWaitOperation(1f), new LoadOperation(2), new UnloadOperation(3));
+            ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new LoadOperation(2), new UnloadOperation(3));
         });
         soundSlider.value = VolumeController.Instance.SoundVolume;
         soundSlider.onValueChanged.AddListener(value =>
