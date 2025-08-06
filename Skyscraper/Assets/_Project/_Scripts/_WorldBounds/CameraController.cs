@@ -13,6 +13,7 @@ namespace Skyscraper.WorldBounds
         [SerializeField] private float zoomSpeedInfluence = 0.2f; // how much % each point of zoom increases speed
         [SerializeField] private float minZoom = 2f;
         [SerializeField] private float zoomFactor = 0.035f;
+        [SerializeField] private float zoomOffset = 1f;
 
         private void Awake()
         {
@@ -38,9 +39,9 @@ namespace Skyscraper.WorldBounds
 
             float maxZoom;
             if (WorldBoundsController.BoundSize.x / WorldBoundsController.BoundSize.y > sceneCamera.Lens.Aspect)
-                maxZoom = WorldBoundsController.BoundSize.y / 2;
+                maxZoom = Mathf.Max(WorldBoundsController.BoundSize.y / 2 - zoomOffset, 5f);
             else
-                maxZoom = WorldBoundsController.BoundSize.x / 2 / sceneCamera.Lens.Aspect;
+                maxZoom = Mathf.Max(WorldBoundsController.BoundSize.x / 2 / sceneCamera.Lens.Aspect - zoomOffset, 5f);
 
             var previousPosition = sceneCamera.transform.position;
             sceneCamera.Lens.OrthographicSize = Mathf.Clamp(newSize, minZoom, maxZoom);
