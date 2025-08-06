@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class PauseUI : MonoBehaviour
 {
     [OnChild, SerializeField] private Button resume;
-    [OnChild(1), SerializeField] private Button toMainMenu;
+    [OnChild(1), SerializeField] private Button restartButton;
+    [OnChild(2), SerializeField] private Button toMainMenu;
     [SerializeField] private Button pause;
     [SerializeField] private Slider soundSlider;
     [SerializeField] private Slider musicSlider;
@@ -19,6 +20,10 @@ public class PauseUI : MonoBehaviour
 
         pause.onClick.AddListener(Pause);
         resume.onClick.AddListener(Unpause);
+        restartButton.onClick.AddListener(() =>
+        {
+            ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new LoadOperation(1), new UnloadOperation(3));
+        });
         toMainMenu.onClick.AddListener(() =>
         {
             ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new LoadOperation(2), new UnloadOperation(3));
