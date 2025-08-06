@@ -30,6 +30,10 @@ public class BlockMover : MonoBehaviour
     private void OnDestroy()
     {
         EventBroker.Unsubscribe<ForceBlockSpawnEvent>(SetMass);
+        InputManager.OnMovement -= MoveCurrentBlock;
+        InputManager.OnRotation -= RotateCurrentBlock;
+        InputManager.OnSpeedupStarted -= SpeedUpBlockFall;
+        InputManager.OnSpeedupCanceled -= SlowDownBlockFall;
     }
 
     private void SetMass()

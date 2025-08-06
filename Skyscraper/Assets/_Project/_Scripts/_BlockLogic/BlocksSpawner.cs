@@ -50,6 +50,7 @@ public class BlocksSpawner : Singleton<BlocksSpawner>
         EventBroker.Unsubscribe<BlockFirstCollisionEvent>(SpawnAfterInterval);
         EventBroker.Unsubscribe<InventoryEmptyEvent>(DeactivateSpawner);
         EventBroker.Unsubscribe<InventoryResuppliedEvent>(ReactivateSpawner);
+        InputManager.OnSpeedupStarted -= SpeedUpSpawn;
     }
 
     private void Spawn()

@@ -36,13 +36,19 @@ public class SoundPlayer : MonoBehaviour
         borrowedSource.Play();
     }
 
+    private void OnDestroy()
+    {
+        if (AudioPlayer.Instance != null)
+            AudioPlayer.Instance.ReleaseSource(borrowedSource);
+    }
+
     private void PlayFirstSound(Collision2D collision)
     {
         borrowedSource.Stop();
         borrowedSource.loop = false;
         AudioPlayer.Instance.ReleaseSource(borrowedSource);
         borrowedSource = null;
-        
+
         var velocity = collision.relativeVelocity.magnitude;
         float volume;
         if (velocity >= maxSpeedOfMediumSound)
