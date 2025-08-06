@@ -1,5 +1,6 @@
 using Skyscraper.Inputs;
 using ThreeDent.DevelopmentTools.Attributes;
+using ThreeDent.EventBroker;
 using ThreeDent.SceneManagement;
 using ThreeDent.SceneManagement.Operations;
 using UnityEngine;
@@ -22,10 +23,14 @@ public class PauseUI : MonoBehaviour
         resume.onClick.AddListener(Unpause);
         restartButton.onClick.AddListener(() =>
         {
+            Time.timeScale = 1f;
+            EventBroker.Invoke<SceneSwitchEvent>();
             ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new LoadOperation(1), new UnloadOperation(3));
         });
         toMainMenu.onClick.AddListener(() =>
         {
+            Time.timeScale = 1f;
+            EventBroker.Invoke<SceneSwitchEvent>();
             ScenesManager.LoadSequenceAsync(new UnloadOperation(1), new LoadOperation(3), new LoadOperation(2), new UnloadOperation(3));
         });
         soundSlider.value = VolumeController.Instance.SoundVolume;
@@ -63,3 +68,5 @@ public class PauseUI : MonoBehaviour
         InputManager.SwitchMode(InputModes.Game);
     }
 }
+
+public class SceneSwitchEvent : IEvent { }

@@ -1,6 +1,8 @@
 using ThreeDent.DevelopmentTools.Attributes;
 using ThreeDent.DevelopmentTools.Option;
+using ThreeDent.EventBroker;
 using ThreeDent.Helpers.Extensions;
+using ThreeDent.SceneManagement;
 using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
@@ -22,6 +24,7 @@ public class SoundPlayer : MonoBehaviour
     private void Awake()
     {
         landingDetector.OnBlockFirstCollision += PlayFirstSound;
+        EventBroker.Subscribe<SceneSwitchEvent>(ReleaseSource);
     }
 
     private void OnEnable()
@@ -38,7 +41,12 @@ public class SoundPlayer : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (AudioPlayer.Instance != null)
+        EventBroker.Unsubscribe<SceneSwitchEvent>(ReleaseSource);
+    }
+
+    private void ReleaseSource()
+    {
+        if (AudioPlayer.Instance != null && borrowedSource != null)
             AudioPlayer.Instance.ReleaseSource(borrowedSource);
     }
 
