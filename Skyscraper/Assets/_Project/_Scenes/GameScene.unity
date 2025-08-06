@@ -1261,8 +1261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4b2783915ac40f08fdda770061f4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 8
-  timeToReachUpperBound: 4
+  spawnInterval: 10
+  timeToReachUpperBound: 5
 --- !u!1 &561206340
 GameObject:
   m_ObjectHideFlags: 0
@@ -11487,6 +11487,7 @@ MonoBehaviour:
   zoomSpeedInfluence: 0.2
   minZoom: 2
   zoomFactor: 0.035
+  zoomOffset: 1
 --- !u!114 &1766534845
 MonoBehaviour:
   m_ObjectHideFlags: 0
