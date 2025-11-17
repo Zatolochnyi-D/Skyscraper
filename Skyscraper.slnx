@@ -1,5 +1,5 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="ThreeDent.DevelopmentTools.Option.csproj" />
   <Project Path="Skyscraper.Inputs.csproj" />
+  <Project Path="ThreeDent.DevelopmentTools.Option.csproj" />
 </Solution>
