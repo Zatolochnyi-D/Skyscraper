@@ -9,3 +9,5 @@ The project uses Unity and personal packages built for Unity.
 The project is using third-party assets (such as sounds, music and font). All are licensed under Creative Commons 0 or similar licenses.
 
 Finished version of project is published on itch.io: https://3dent.itch.io/skyscraper
+
+Gameplay video: https://youtu.be/X8JiJf6BsXU
